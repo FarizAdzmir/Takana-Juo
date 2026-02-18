@@ -14,10 +14,10 @@ const menuItems: MenuItem[] = [
     { id: 1, name: "Nasi Goreng", price: "RM 4", variation: "Ala Carte" },
     { id: 2, name: "Nasi Goreng Telur", price: "RM 5", variation: "Ala Carte" },
     { id: 3, name: "Nasi Goreng Daging", price: "RM 7", variation: "Ala Carte" },
-    { id: 4, name: "Nasi Goreng Ayam", price: "RM 9", variation: "Ala Carte" },
+    { id: 4, name: "Nasi Goreng Ayam", price: "RM 10", variation: "Ala Carte" },
     { id: 5, name: "Nasi Goreng Daging Telur", price: "RM 9", variation: "Combo" },
-    { id: 6, name: "Nasi Goreng Ayam Telur", price: "RM 10", variation: "Combo" },
-    { id: 7, name: "Nasi Goreng Special", price: "RM 11", variation: "Combo" },
+    { id: 6, name: "Nasi Goreng Ayam Telur", price: "RM 11", variation: "Combo" },
+    { id: 7, name: "Nasi Goreng Special", price: "RM 12", variation: "Combo" },
 ];
 
 function MenuCard({ item, index }: { item: MenuItem; index: number }) {
@@ -74,8 +74,8 @@ function MenuCard({ item, index }: { item: MenuItem; index: number }) {
                         </span>
                         <span
                             className={`text-[10px] uppercase tracking-[0.25em] px-3 border ${item.variation === "Combo"
-                                    ? "text-gold border-gold/30 bg-gold/5"
-                                    : "text-cream/50 border-cream/10"
+                                ? "text-gold border-gold/30 bg-gold/5"
+                                : "text-cream/50 border-cream/10"
                                 }`}
                         >
                             {item.variation}
