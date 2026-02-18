@@ -24,16 +24,14 @@ export default function Experience() {
     ];
 
     const highlights = [
-        { value: "4.9", labelKey: "experience.guestRating" },
-        { value: "10K+", labelKey: "experience.happyGuests" },
+        { value: "4.9", labelKey: "experience.customerRating" },
         { value: "100%", labelKey: "experience.freshIngredients" },
-        { value: "#1", labelKey: "experience.inWestSumatra" },
+        { value: "#1", labelKey: "experience.inKualaLumpur" },
     ];
 
     return (
         <section
-            id="experience"
-            className="relative py-24 md:py-32 bg-cream overflow-hidden"
+            className="relative py-24 md:py-32 overflow-hidden"
         >
             {/* Decorative background element */}
             <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full border border-gold/5" />
@@ -79,7 +77,7 @@ export default function Experience() {
 
                 {/* Highlights Strip */}
                 <div className="bg-charcoal py-10 px-8">
-                    <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
+                    <div className="grid grid-cols-2 md:grid-cols-3 gap-8">
                         {highlights.map((item) => (
                             <div key={item.labelKey} className="text-center">
                                 <p className="font-heading text-3xl md:text-4xl text-gold mb-2">

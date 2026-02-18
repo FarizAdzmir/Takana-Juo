@@ -12,9 +12,11 @@ interface CardStackProps {
     }[];
     offset?: number;
     scaleFactor?: number;
+    topOffset?: number | string;
+    cardGap?: number;
 }
 
-export default function CardStack({ items, offset = 10, scaleFactor = 0 }: CardStackProps) {
+export default function CardStack({ items, offset = 10, scaleFactor = 0.06, topOffset = "20vh", cardGap = 10 }: CardStackProps) {
     return (
         <div className="relative w-full">
             {items.map((item, index) => (
@@ -25,6 +27,8 @@ export default function CardStack({ items, offset = 10, scaleFactor = 0 }: CardS
                     progress={index / items.length}
                     range={[index * 0.25, 1]}
                     targetScale={1 - (items.length - index) * scaleFactor}
+                    topOffset={topOffset}
+                    cardGap={cardGap}
                 />
             ))}
         </div>
@@ -37,12 +41,16 @@ function Card({
     progress,
     range,
     targetScale,
+    topOffset,
+    cardGap,
 }: {
     i: number;
     content: ReactNode;
     progress: number;
     range: number[];
     targetScale: number;
+    topOffset: number | string;
+    cardGap: number;
 }) {
     const container = useRef(null);
     const { scrollYProgress } = useScroll({
@@ -55,12 +63,13 @@ function Card({
     return (
         <div
             ref={container}
-            className="h-screen flex items-start justify-center sticky top-0 px-4 pt-32 z-0"
+            style={{ paddingTop: topOffset }}
+            className="h-screen flex items-start justify-center sticky top-0 px-4 z-0"
         >
             <motion.div
                 style={{
                     scale,
-                    top: `calc(${i * 25}px)`,
+                    top: `calc(${i * cardGap}px)`,
                 }}
                 className="relative flex flex-row items-center justify-between h-[400px] w-full max-w-5xl p-0 origin-top overflow-hidden shadow-2xl"
             >

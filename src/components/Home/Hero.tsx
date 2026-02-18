@@ -4,6 +4,7 @@ import { useLayoutEffect, useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useLanguage } from "@/context/LanguageContext";
+import RollingText from "@/components/UI/RollingText";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -18,7 +19,6 @@ export default function Hero({ isLoaded = false, preloadedImages = [] }: HeroPro
     const { t } = useLanguage();
 
     // Canvas setup and scroll animation
-    // useLayoutEffect ensures canvas renders synchronously before browser paint
     useLayoutEffect(() => {
         if (!isLoaded || preloadedImages.length === 0 || !canvasRef.current || !containerRef.current) return;
 
@@ -55,14 +55,18 @@ export default function Hero({ isLoaded = false, preloadedImages = [] }: HeroPro
 
             if (img && img.complete) {
                 const container = containerRef.current;
+                // Double check container existence
                 if (!container) return;
 
                 const containerWidth = container.offsetWidth;
                 const containerHeight = container.offsetHeight;
+
+                // Avoid rendering on 0x0 container
+                if (containerWidth === 0 || containerHeight === 0) return;
+
                 const imgWidth = img.naturalWidth;
                 const imgHeight = img.naturalHeight;
 
-                // Set canvas buffer size to container size for crisp rendering
                 canvas.width = containerWidth;
                 canvas.height = containerHeight;
 
@@ -75,32 +79,44 @@ export default function Hero({ isLoaded = false, preloadedImages = [] }: HeroPro
             }
         };
 
-        // CRITICAL: Draw frame 0 immediately (synchronously before paint)
+        // Draw initially
         renderFrame(0);
 
-        const handleResize = () => renderFrame(0);
+        // Helper to update on resize
+        const handleResize = () => {
+            // Re-render current frame based on scroll progress if scrollTrigger exists, otherwise frame 0
+            // But simpler to just re-render frame 0 if we haven't scrolled, or track current frame.
+            // For robustness, let's just let ScrollTrigger's onUpdate handle it during scroll,
+            // and here we just ensure canvas size is correct.
+            if (scrollTrigger && scrollTrigger.progress) {
+                const frameIndex = Math.floor(scrollTrigger.progress * (frameCount - 1));
+                renderFrame(frameIndex);
+            } else {
+                renderFrame(0);
+            }
+        };
+
         window.addEventListener("resize", handleResize);
 
-        // Create ScrollTrigger AFTER canvas is initialized
+        // Create ScrollTrigger
         const scrollTrigger = ScrollTrigger.create({
             trigger: containerRef.current,
             start: "top top",
-            end: "+=500%",
+            end: "+=150%",
             scrub: 0.5,
             pin: true,
             anticipatePin: 1,
-            invalidateOnRefresh: true,
-            refreshPriority: 1,
+            invalidateOnRefresh: true, // Handle resize automatically for pinning
             onUpdate: (self) => {
                 const frameIndex = Math.floor(self.progress * (frameCount - 1));
                 renderFrame(frameIndex);
             },
         });
 
-        // Refresh once after layout settles
+        // Force a refresh and render to ensure everything is synced
         requestAnimationFrame(() => {
-            ScrollTrigger.refresh(true);
             renderFrame(0);
+            ScrollTrigger.refresh();
         });
 
         return () => {
@@ -113,10 +129,10 @@ export default function Hero({ isLoaded = false, preloadedImages = [] }: HeroPro
         <section
             id="hero"
             ref={containerRef}
-            className="relative h-screen flex items-center justify-center overflow-hidden bg-charcoal"
+            className="relative h-screen flex items-center justify-center overflow-hidden"
         >
             {/* Canvas Background */}
-            <div className="absolute inset-0 z-0 bg-charcoal">
+            <div className="absolute inset-0 z-0">
                 <canvas
                     ref={canvasRef}
                     className="block"
@@ -152,30 +168,14 @@ export default function Hero({ isLoaded = false, preloadedImages = [] }: HeroPro
                 </p>
 
                 {/* CTAs */}
-                <div
-                    className="flex flex-col sm:flex-row items-center justify-center gap-4 animate-fade-in"
-                    style={{ animationDelay: "0.6s" }}
-                >
-                    <a
-                        href="#menu"
-                        className="px-8 py-3.5 bg-gold text-charcoal text-sm uppercase tracking-[0.2em] font-medium hover:bg-gold-light transition-all duration-300 hover:shadow-[0_0_30px_rgba(200,169,110,0.3)]"
-                    >
-                        {t("hero.viewMenu")}
-                    </a>
-                    <a
-                        href="#events"
-                        className="px-8 py-3.5 border border-cream/30 text-cream text-sm uppercase tracking-[0.2em] hover:border-gold hover:text-gold transition-all duration-300 backdrop-blur-sm"
-                    >
-                        {t("hero.reservation")}
-                    </a>
-                </div>
+
             </div>
 
             {/* Scroll Indicator */}
             <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 animate-float z-20">
-                <span className="text-cream/50 text-[10px] uppercase tracking-[0.3em]">
+                <RollingText className="text-cream/50 text-[10px] uppercase tracking-[0.3em] hover:text-gold transition-colors duration-300 cursor-pointer">
                     {t("hero.scroll")}
-                </span>
+                </RollingText>
                 <div className="w-[1px] h-8 bg-gradient-to-b from-cream/50 to-transparent" />
             </div>
         </section>

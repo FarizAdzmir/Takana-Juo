@@ -134,7 +134,7 @@ export default function DashboardPage() {
                             <path d="M352.826,647.42l-1.95-.226a354.473,354.473,0,0,1-141.61-46.841q-12.562-74.971-25.1-149.944l-.575-.206A393.106,393.106,0,0,1,3.079,316.392L0,312.308,95.184,687.637l223.035.055.308-.369Z" transform="translate(0 -312.308)" />
                         </svg>
                         <p className="text-cream/40 text-xs uppercase tracking-[0.3em]">
-                            Dashboard
+                            Admin Panel
                         </p>
                     </div>
 

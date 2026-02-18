@@ -16,13 +16,13 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-    title: "Takana Juo — Authentic Minangkabau Cuisine",
+    title: "Takana Juo",
     description:
-        "Experience the bold, rich flavors of Minangkabau cuisine at Takana Juo. Traditional recipes passed down through generations, served with warmth and elegance.",
+        "Nasi Goreng Minang",
     openGraph: {
-        title: "Takana Juo — Authentic Minangkabau Cuisine",
+        title: "Takana Juo",
         description:
-            "Experience the bold, rich flavors of Minangkabau cuisine at Takana Juo.",
+            "Nasi Goreng Minang",
         type: "website",
     },
 };

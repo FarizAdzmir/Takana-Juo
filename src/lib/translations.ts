@@ -3,52 +3,53 @@ export type Language = "my" | "en";
 const translations = {
     // ==================== NavBar ====================
     nav: {
-        story: { my: "Cerita", en: "Story" },
+        story: { my: "Kisah", en: "Story" },
         menu: { my: "Menu", en: "Menu" },
+        reservation: { my: "Tempahan", en: "Reservation" },
         experience: { my: "Pengalaman", en: "Experience" },
-        events: { my: "Acara", en: "Events" },
+        events: { my: "Jamuan", en: "Events" },
         open: { my: "Buka", en: "Open" },
         closed: { my: "Tutup", en: "Closed" },
     },
 
     // ==================== Hero ====================
     hero: {
-        subtitle: { my: "Masakan Minangkabau Autentik", en: "Authentic Minangkabau Cuisine" },
+        subtitle: { my: "Authentic Minang Food", en: "Authentic Minang Food" },
         tagline: {
-            my: "Di mana warisan bertemu cita rasa. Perjalanan kulinari melalui tradisi kaya Sumatera Barat.",
-            en: "Where heritage meets flavor. A culinary journey through the rich traditions of West Sumatra.",
+            my: "Di mana warisan bertemu cita rasa. Perjalanan melalui tradisi dari Minang.",
+            en: "Where heritage meets flavor. A journey through the rich traditions of Minang.",
         },
         viewMenu: { my: "Lihat Menu", en: "View Menu" },
         reservation: { my: "Tempahan", en: "Reservation" },
-        scroll: { my: "Tatal", en: "Scroll" },
+        scroll: { my: "Scroll", en: "Scroll" },
     },
 
     // ==================== Story ====================
     story: {
-        label: { my: "Cerita Kami", en: "Our Story" },
+        label: { my: "Kisah Kami", en: "Our Story" },
         heading: { my: "Warisan", en: "A Legacy of" },
         headingAccent: { my: "Rasa", en: "Flavor" },
         p1: {
-            my: "Lahir dari hati Sumatera Barat, Takana Juo membawa semangat masakan Minangkabau — berani, harum, dan berakar dalam tradisi. Nama kami, bermaksud \"kenang rasa,\" adalah janji yang kami tepati dengan setiap hidangan.",
-            en: "Born from the heart of West Sumatra, Takana Juo carries the spirit of Minangkabau cuisine — bold, aromatic, and deeply rooted in tradition. Our name, meaning \"remember the flavors,\" is a promise we keep with every dish.",
+            my: "Berasal dari Bukit Tinggi, Takana Juo membawa semangat rasa Minangkabau — ringkas, mengenyangkan, dan dekat di hati. Namanya yang bermaksud “mengingati rasa” lahir daripada sebuah perjalanan merantau, apabila seorang bapa berhijrah dari Indonesia ke Malaysia dengan harapan untuk membina perniagaan kecil demi menyara keluarga.",
+            en: "Born in Bukit Tinggi, Takana Juo carries the spirit of Minangkabau flavors — bold, comforting, and rooted in everyday tradition. The name, meaning “remember the flavors,” reflects a journey that crossed borders, when a father travelled from Indonesia to Malaysia with a simple hope: to build a small food business that could feed his family.",
         },
         p2: {
-            my: "Selama lebih sedekad, dapur kami menjadi tempat berkumpul di mana resipi keluarga bertemu teknik halus. Setiap rempah dipilih sendiri, setiap santan diperah segar, setiap rendang dimasak perlahan sehingga sempurna.",
-            en: "For over a decade, our kitchen has been a gathering place where family recipes meet refined technique. Each spice is hand-selected, each coconut freshly pressed, each rendang slow-cooked to perfection.",
+            my: "Bermula secara sederhana di atas beca, perniagaan ini mula menjual nasi goreng di Pasar Minggu Kampung Baru pada tahun 1995, beroperasi dari jam 3 petang hingga 12 malam. Fokusnya jelas dan jujur — nasi goreng panas dimasak terus, disajikan bersama lauk pilihan seperti telur, ayam, atau daging. Semua resipi adalah olahan sendiri, diasah melalui masa, usaha, dan kesungguhan.",
+            en: "Starting humbly atop a beca, the family began selling nasi goreng at Pasar Minggu Kampung Baru in 1995, operating from 3 in the afternoon until midnight. The focus was simple and honest — nasi goreng cooked to order, served with familiar side dishes like egg, chicken, or beef. Every recipe was self-crafted, refined through long nights, repetition, and care.",
         },
         p3: {
-            my: "Kami percaya makanan hebat lebih dari sekadar rezeki — ia adalah jambatan antara generasi, perayaan budaya, dan jemputan untuk rasa kekitaan.",
-            en: "We believe that great food is more than sustenance — it is a bridge between generations, a celebration of culture, and an invitation to belong.",
+            my: "Lebih daripada sekadar perniagaan, Takana Juo dibina untuk kelangsungan hidup dan masa depan keluarga. Apa yang bermula kecil kini menjadi legasi yang terus bertahan — masih kekal berniaga hingga ke hari ini, menyajikan rasa yang sederhana, ikhlas, dan penuh kenangan.",
+            en: "More than a business, Takana Juo was built to put food on the table and keep a family moving forward. What began as a small roadside effort has grown into a lasting legacy — still operating strong today, serving the same comforting flavors that have followed generations through time.",
         },
         years: { my: "Tahun", en: "Years" },
         dishes: { my: "Hidangan", en: "Dishes" },
-        passion: { my: "Keghairahan", en: "Passion" },
+        passion: { my: "Dedikasi", en: "Passion" },
         ourKitchen: { my: "Dapur Kami", en: "Our Kitchen" },
     },
 
     // ==================== Menu ====================
     menu: {
-        label: { my: "Pilihan Kami", en: "Our Selection" },
+        label: { my: "Authentic Minang Food", en: "Authentic Minang Food" },
         heading: { my: "The", en: "The" },
         headingAccent: { my: "Menu", en: "Menu" },
         subtitle: {
@@ -151,33 +152,32 @@ const translations = {
 
     // ==================== Experience ====================
     experience: {
-        label: { my: "Kenapa Pilih Kami", en: "Why Choose Us" },
-        heading: { my: "The", en: "The" },
+        label: { my: "Authentic Minang Food", en: "Authentic Minang Food" },
+        heading: { my: "Sebuah", en: "The" },
         headingAccent: { my: "Pengalaman", en: "Experience" },
-        ambiance: { my: "Suasana", en: "Ambiance" },
+        ambiance: { my: "Penyediaan", en: "Craft" },
         ambianceDesc: {
-            my: "Dalaman kayu hangat diilhamkan seni bina tradisional Rumah Gadang Minangkabau, mencipta suasana warisan dan keselesaan.",
-            en: "Warm wooden interiors inspired by traditional Minangkabau Rumah Gadang architecture, creating an atmosphere of heritage and comfort.",
+            my: "Nasi goreng digoreng rapi dengan adunan resepi warisan turun-temurun, memastikan setiap butir nasi kaya dengan rasa yang seimbang.",
+            en: "Our Nasi Goreng is prepared using a heritage blend of family ingredients, carefully tossed so each grain carries a full, balanced flavor.",
         },
-        service: { my: "Layanan", en: "Service" },
+        service: { my: "Perapan", en: "Marination" },
         serviceDesc: {
-            my: "Layanan mesra gaya keluarga berakar dalam tradisi kemurahan hati Minangkabau — di mana setiap tetamu adalah keluarga.",
-            en: "Attentive, family-style hospitality rooted in the Minangkabau tradition of generous warmth — where every guest is family.",
+            my: "Ayam dan daging diperap sebati dengan kunyit dan rempah rahsia turun-temurun, membangkitkan aroma lembut dan rasa yang mendalam.",
+            en: "Chicken and beef are marinated in turmeric and time-honored secret spices, imparting a gentle fragrance and a well-developed taste.",
         },
-        cuisine: { my: "Masakan", en: "Cuisine" },
+        cuisine: { my: "Tekstur", en: "Texture" },
         cuisineDesc: {
-            my: "Dari rendang yang dimasak perlahan berjam-jam hingga pes rempah yang dikisar segar, setiap hidangan mencerminkan komitmen kami terhadap keaslian dan kraf.",
-            en: "From rendang slow-cooked for hours to freshly ground spice pastes, every dish reflects our commitment to authenticity and craft.",
+            my: "Telur segar diaduk sehingga gebu sempurna, menghasilkan telur dadar keemasan yang ringan dan lembut di lidah.",
+            en: "Farm-fresh eggs are beaten to perfection, creating a fluffy, golden omelette that is light and melts in the mouth.",
         },
-        guestRating: { my: "Penilaian Tetamu", en: "Guest Rating" },
-        happyGuests: { my: "Tetamu Gembira", en: "Happy Guests" },
+        customerRating: { my: "Rating Pelanggan", en: "Customer Rating" },
         freshIngredients: { my: "Bahan Segar", en: "Fresh Ingredients" },
-        inWestSumatra: { my: "Di Sumatera Barat", en: "In West Sumatra" },
+        inKualaLumpur: { my: "Di Kuala Lumpur", en: "In Kuala Lumpur" },
     },
 
     // ==================== Events ====================
     events: {
-        label: { my: "Apa Yang Berlaku", en: "What's Happening" },
+        label: { my: "Authentic Minang Food", en: "Authentic Minang Food" },
         heading1: { my: "Acara &", en: "Events &" },
         headingAccent: { my: "Perhimpunan", en: "Gatherings" },
         subtitle: {

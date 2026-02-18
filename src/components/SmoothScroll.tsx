@@ -16,7 +16,15 @@ export default function SmoothScroll({ children }: { children: React.ReactNode }
       orientation: "vertical",
       gestureOrientation: "vertical",
       smoothWheel: true,
+      syncTouch: true,
     });
+
+    // Force scroll to top
+    if (typeof window !== "undefined") {
+      window.history.scrollRestoration = "manual";
+      window.scrollTo(0, 0);
+      lenis.scrollTo(0, { immediate: true });
+    }
 
     lenis.on("scroll", ScrollTrigger.update);
 

@@ -1,142 +1,125 @@
+// @ts-nocheck
 "use client";
 
-import { useState } from "react";
-import { useLanguage } from "@/context/LanguageContext";
+import CardStack from "../UI/CardStack";
 
 interface MenuItem {
-    name: string;
-    descKey: string;
+    id: number;
+    main: string;
+    sub: string;
     price: string;
+    image?: string; // Optional for future
 }
 
-interface MenuCategory {
-    id: string;
-    labelKey: string;
-    items: MenuItem[];
-}
-
-const menuCategories: MenuCategory[] = [
-    {
-        id: "appetizers",
-        labelKey: "menu.appetizers",
-        items: [
-            { name: "Perkedel Jagung", descKey: "menu.items.perkedel.desc", price: "35K" },
-            { name: "Sate Padang", descKey: "menu.items.satePadang.desc", price: "45K" },
-            { name: "Martabak Telur", descKey: "menu.items.martabak.desc", price: "40K" },
-            { name: "Keripik Balado", descKey: "menu.items.keripik.desc", price: "25K" },
-        ],
-    },
-    {
-        id: "mains",
-        labelKey: "menu.mains",
-        items: [
-            { name: "Rendang Daging", descKey: "menu.items.rendang.desc", price: "75K" },
-            { name: "Gulai Ayam", descKey: "menu.items.gulai.desc", price: "55K" },
-            { name: "Dendeng Batokok", descKey: "menu.items.dendeng.desc", price: "65K" },
-            { name: "Ikan Bakar Rica", descKey: "menu.items.ikanBakar.desc", price: "70K" },
-        ],
-    },
-    {
-        id: "desserts",
-        labelKey: "menu.desserts",
-        items: [
-            { name: "Kolak Pisang", descKey: "menu.items.kolak.desc", price: "30K" },
-            { name: "Kue Lapis", descKey: "menu.items.kueLapis.desc", price: "25K" },
-            { name: "Es Teler", descKey: "menu.items.esTeler.desc", price: "35K" },
-        ],
-    },
-    {
-        id: "drinks",
-        labelKey: "menu.drinks",
-        items: [
-            { name: "Teh Talua", descKey: "menu.items.tehTalua.desc", price: "25K" },
-            { name: "Kopi Luak", descKey: "menu.items.kopiLuak.desc", price: "55K" },
-            { name: "Es Jeruk Nipis", descKey: "menu.items.esJeruk.desc", price: "20K" },
-        ],
-    },
+const menuItems: MenuItem[] = [
+    { id: 1, main: "Nasi Goreng", sub: "Original", price: "RM 4" },
+    { id: 2, main: "Nasi Goreng", sub: "Telur", price: "RM 5" },
+    { id: 3, main: "Nasi Goreng", sub: "Daging", price: "RM 7" },
+    { id: 4, main: "Nasi Goreng", sub: "Ayam", price: "RM 10" },
+    { id: 5, main: "Nasi Goreng", sub: "Daging Telur", price: "RM 9" },
+    { id: 6, main: "Nasi Goreng", sub: "Ayam Telur", price: "RM 11" },
+    { id: 7, main: "Nasi Goreng", sub: "Special", price: "RM 12" },
 ];
 
-export default function Menu() {
-    const [activeCategory, setActiveCategory] = useState("mains");
-    const { t } = useLanguage();
-
-    const currentCategory = menuCategories.find((c) => c.id === activeCategory);
-
+function MenuCard({ item }: { item: MenuItem; index: number }) {
     return (
-        <section id="menu" className="relative py-24 md:py-32 bg-charcoal overflow-hidden">
-            {/* Background accent */}
-            <div className="absolute top-0 right-0 w-1/3 h-full bg-gradient-to-l from-gold/[0.03] to-transparent" />
+        <div className="flex flex-col md:flex-row h-full w-full bg-charcoal-light border border-cream/5 hover:border-gold/30 transition-colors duration-500 overflow-hidden group">
+            {/* Image/Pattern Side (Top on Mobile, Left on Desktop) */}
+            <div className="w-full h-[55%] md:w-1/2 md:h-full bg-charcoal border-b md:border-b-0 md:border-r border-cream/5 flex items-center justify-center relative overflow-hidden">
+                {/* Pattern Overlay */}
+                <div className="absolute inset-0 opacity-10 bg-[radial-gradient(#faf6f0_1px,transparent_1px)] [background-size:16px_16px] pointer-events-none" />
 
-            <div className="relative max-w-6xl mx-auto px-6">
-                {/* Header */}
-                <div className="text-center mb-16 space-y-4">
-                    <div className="flex items-center justify-center gap-3">
-                        <div className="w-8 h-[1px] bg-gold" />
-                        <span className="text-gold text-xs uppercase tracking-[0.3em]">
-                            {t("menu.label")}
-                        </span>
-                        <div className="w-8 h-[1px] bg-gold" />
-                    </div>
-                    <h2 className="font-heading text-4xl md:text-5xl text-cream">
-                        {t("menu.heading")} <span className="text-gold italic">{t("menu.headingAccent")}</span>
-                    </h2>
-                    <p className="text-cream/50 max-w-md mx-auto text-sm leading-relaxed">
-                        {t("menu.subtitle")}
-                    </p>
-                </div>
+                {/* Decorative Circle */}
+                <div className="absolute w-[80%] aspect-square rounded-full border border-gold/5 group-hover:scale-110 transition-transform duration-700 ease-out" />
+                <div className="absolute w-[60%] aspect-square rounded-full border border-gold/10 group-hover:scale-105 transition-transform duration-700 ease-out delay-75" />
 
-                {/* Category Tabs */}
-                <div className="flex flex-wrap justify-center gap-2 mb-14">
-                    {menuCategories.map((cat) => (
-                        <button
-                            key={cat.id}
-                            onClick={() => setActiveCategory(cat.id)}
-                            className={`px-6 py-2.5 text-xs uppercase tracking-[0.2em] transition-all duration-300 border ${activeCategory === cat.id
-                                ? "bg-gold text-charcoal border-gold"
-                                : "bg-transparent text-cream/60 border-cream/15 hover:border-gold/50 hover:text-cream"
-                                }`}
-                        >
-                            {t(cat.labelKey)}
-                        </button>
-                    ))}
-                </div>
-
-                {/* Menu Items */}
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-8">
-                    {currentCategory?.items.map((item) => (
-                        <div
-                            key={item.name}
-                            className="group border-b border-cream/10 pb-6 hover:border-gold/30 transition-colors duration-300"
-                        >
-                            <div className="flex items-baseline justify-between gap-4 mb-2">
-                                <h3 className="font-heading text-lg text-cream group-hover:text-gold transition-colors duration-300">
-                                    {item.name}
-                                </h3>
-                                <div className="flex-1 border-b border-dotted border-cream/15 min-w-8 translate-y-[-4px]" />
-                                <span className="font-heading text-gold text-lg">
-                                    {item.price}
-                                </span>
-                            </div>
-                            <p className="text-cream/40 text-sm leading-relaxed">
-                                {t(item.descKey)}
-                            </p>
-                        </div>
-                    ))}
-                </div>
-
-                {/* View Full Menu CTA */}
-                <div className="text-center mt-14">
-                    <a
-                        href="#"
-                        className="inline-flex items-center gap-3 text-gold text-sm uppercase tracking-[0.2em] hover:gap-5 transition-all duration-300 group"
+                <div className="flex flex-col items-center gap-2 md:gap-3 opacity-30 relative z-10 group-hover:opacity-100 transition-opacity duration-500">
+                    <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        className="w-10 h-10 md:w-16 md:h-16 text-cream/40 group-hover:text-gold transition-colors duration-500"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                        strokeWidth={0.8}
                     >
-                        {t("menu.viewFullMenu")}
-                        <span className="text-lg group-hover:translate-x-1 transition-transform duration-300">
-                            →
-                        </span>
-                    </a>
+                        <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            d="m2.25 15.75 5.159-5.159a2.25 2.25 0 0 1 3.182 0l5.159 5.159m-1.5-1.5 1.409-1.409a2.25 2.25 0 0 1 3.182 0l2.909 2.909M3.75 21h16.5A2.25 2.25 0 0 0 22.5 18.75V5.25A2.25 2.25 0 0 0 20.25 3H3.75A2.25 2.25 0 0 0 1.5 5.25v13.5A2.25 2.25 0 0 0 3.75 21Z"
+                        />
+                    </svg>
                 </div>
             </div>
+
+            {/* Content Details (Bottom on Mobile, Right on Desktop) */}
+            <div className="w-full h-[45%] md:w-1/2 md:h-full p-6 md:p-10 relative flex flex-col justify-center">
+
+                {/* Main Name */}
+                <h3 className="font-heading text-3xl md:text-5xl lg:text-6xl text-cream leading-[0.9] tracking-wide group-hover:text-gold transition-colors duration-300">
+                    {item.main}
+                </h3>
+
+                {/* Sub variation */}
+                <div className="flex items-center gap-4 mt-2 md:mt-4">
+                    <span className="w-8 md:w-12 h-[1px] bg-gold/50 group-hover:w-16 transition-all duration-300" />
+                    <span className="font-serif italic text-xl md:text-2xl text-gold/80">
+                        {item.sub}
+                    </span>
+                </div>
+
+                {/* Price (Absolute positioning for cleaner layout) */}
+                <div className="absolute bottom-6 right-6 md:bottom-10 md:right-10">
+                    <span className="font-heading text-2xl md:text-4xl text-cream group-hover:text-gold transition-colors duration-300">
+                        {item.price}
+                    </span>
+                </div>
+            </div>
+        </div>
+    );
+}
+
+export default function Menu() {
+    const cardStackItems = menuItems.map((item, index) => ({
+        id: item.id,
+        content: <MenuCard item={item} index={index} />,
+    }));
+
+    return (
+        <section id="menu" className="relative min-h-screen">
+            {/* Section Header */}
+            <div className="sticky top-0 z-30 text-center pt-10 md:pt-16 pb-10 px-4 backdrop-blur-sm transition-all duration-300">
+                <div className="flex items-center justify-center gap-3 mb-4">
+                    <div className="w-6 md:w-8 h-[1px] bg-gold" />
+                    <span className="text-gold text-[10px] md:text-xs uppercase tracking-[0.3em]">
+                        Our Selection
+                    </span>
+                    <div className="w-6 md:w-8 h-[1px] bg-gold" />
+                </div>
+                <h2 className="font-heading text-3xl md:text-5xl text-cream">
+                    The <span className="text-gold italic">Menu</span>
+                </h2>
+                <p className="text-cream/50 max-w-sm md:max-w-md mx-auto text-xs md:text-sm leading-relaxed mt-4">
+                    Simple. Authentic. Homestyle Nasi Goreng — the soul food.
+                </p>
+            </div>
+
+            {/* CardStack (Now functional on Mobile & Desktop) */}
+            <div className="relative z-0 px-4 md:px-10 xl:px-20 2xl:px-28 pb-20">
+                {/* topOffset = Header Height + padding */}
+                {/* Mobile: Header is approx 200px. Desktop: Approx 260px. */}
+                {/* We can pass a responsive value if we used CSS classes, but here we estimate safe buffer */}
+                <CardStack
+                    items={cardStackItems}
+                    topOffset="260px"
+                    cardGap={0}
+                    scaleFactor={0}
+                />
+            </div>
+
+            {/* Removed separate Mobile Horizontal Scroll */}
+
+            {/* Spacing after stack */}
+            <div className="h-[10vh] md:h-[20vh]" />
         </section>
     );
 }

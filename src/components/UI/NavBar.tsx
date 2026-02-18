@@ -1,18 +1,106 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import Link from "next/link";
-import RollingText from "./RollingText";
+import { motion } from "framer-motion";
 import { useLanguage } from "@/context/LanguageContext";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 const navLinkKeys = [
-    { key: "nav.story", href: "#story" },
     { key: "nav.menu", href: "#menu" },
-    { key: "nav.experience", href: "#experience" },
-    { key: "nav.events", href: "#events" },
+    { key: "nav.reservation", href: "#reservation" },
 ];
 
+function RollingLangToggle({
+    currentLang,
+    onToggle,
+    className = "",
+}: {
+    currentLang: string;
+    onToggle: () => void;
+    className?: string;
+}) {
+    const otherLang = currentLang === "my" ? "EN" : "MY";
+    const displayLang = currentLang.toUpperCase();
+
+    return (
+        <button
+            onClick={onToggle}
+            className={`relative overflow-hidden flex items-center justify-center cursor-pointer ${className}`}
+            style={{ height: "1.5em" }}
+        >
+            <motion.div
+                initial="initial"
+                whileHover="hovered"
+                className="relative flex flex-col items-center justify-start w-full"
+            >
+                <div style={{ overflow: "hidden" }}>
+                    <motion.div
+                        variants={{
+                            initial: { y: 0 },
+                            hovered: { y: "-100%" },
+                        }}
+                        transition={{ duration: 0.3, ease: [0.33, 1, 0.68, 1] }}
+                    >
+                        {displayLang}
+                    </motion.div>
+                </div>
+
+                <motion.div
+                    className="absolute top-0 left-0 w-full text-center"
+                    variants={{
+                        initial: { y: "100%" },
+                        hovered: { y: 0 },
+                    }}
+                    transition={{ duration: 0.3, ease: [0.33, 1, 0.68, 1] }}
+                >
+                    {otherLang}
+                </motion.div>
+            </motion.div>
+        </button>
+    );
+}
+
+function NavRollingText({ children }: { children: React.ReactNode }) {
+    return (
+        <div
+            className="relative overflow-hidden flex items-center justify-center"
+            style={{ height: "1.5em" }}
+        >
+            <motion.div
+                initial="initial"
+                whileHover="hovered"
+                className="relative flex flex-col items-center justify-start w-full"
+            >
+                <div style={{ overflow: "hidden" }}>
+                    <motion.div
+                        variants={{
+                            initial: { y: 0 },
+                            hovered: { y: "-100%" },
+                        }}
+                        transition={{ duration: 0.3, ease: [0.33, 1, 0.68, 1] }}
+                    >
+                        {children}
+                    </motion.div>
+                </div>
+
+                <motion.div
+                    className="absolute top-0 left-0 w-full text-center"
+                    variants={{
+                        initial: { y: "100%" },
+                        hovered: { y: 0 },
+                    }}
+                    transition={{ duration: 0.3, ease: [0.33, 1, 0.68, 1] }}
+                >
+                    {children}
+                </motion.div>
+            </motion.div>
+        </div>
+    );
+}
+
 export default function NavBar() {
+    gsap.registerPlugin(ScrollTrigger);
     const [isScrolled, setIsScrolled] = useState(false);
     const [isMobileOpen, setIsMobileOpen] = useState(false);
     const [isLightSection, setIsLightSection] = useState(false);
@@ -42,31 +130,53 @@ export default function NavBar() {
         };
         window.addEventListener("scroll", handleScroll);
 
-        const observerOptions = {
-            root: null,
-            rootMargin: "-10% 0px -90% 0px",
-            threshold: 0,
-        };
+        const initScrollTriggers = () => {
+            // Use ScrollTrigger to detect sections for NavBar style changes
+            // Matches the logic in page.tsx for background color
+            const lightSections = ["#story", "#experience"];
+            const triggers: ScrollTrigger[] = [];
 
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach((entry) => {
-                if (entry.isIntersecting) {
-                    const id = entry.target.id;
-                    if (id === "story" || id === "experience") {
-                        setIsLightSection(true);
-                    } else {
-                        setIsLightSection(false);
-                    }
+            lightSections.forEach((id) => {
+                const section = document.querySelector(id);
+                if (section) {
+                    const st = ScrollTrigger.create({
+                        trigger: section,
+                        start: "top 50px", // Offset for NavBar height
+                        end: "bottom 50px",
+                        onEnter: () => setIsLightSection(true),
+                        onLeave: () => setIsLightSection(false),
+                        onEnterBack: () => setIsLightSection(true),
+                        onLeaveBack: () => setIsLightSection(false),
+                    });
+                    triggers.push(st);
                 }
             });
-        }, observerOptions);
 
-        const sections = document.querySelectorAll("section");
-        sections.forEach((section) => observer.observe(section));
+            // Cleanup function for these specific triggers
+            return () => {
+                triggers.forEach(t => t.kill());
+            };
+        };
+
+        let cleanupTriggers: (() => void) | undefined;
+
+        // If already ready (e.g. on navigation back to home or refresh where preloader matches fast)
+        if (document.body.classList.contains("theme-ready")) {
+            cleanupTriggers = initScrollTriggers();
+        }
+
+        const handleThemeReady = () => {
+            if (cleanupTriggers) cleanupTriggers();
+            cleanupTriggers = initScrollTriggers();
+        };
+
+        window.addEventListener("takana-theme-ready", handleThemeReady);
 
         return () => {
             window.removeEventListener("scroll", handleScroll);
-            observer.disconnect();
+            window.removeEventListener("takana-theme-ready", handleThemeReady);
+            if (cleanupTriggers) cleanupTriggers();
+            ScrollTrigger.getAll().forEach((t) => t.kill());
         };
     }, []);
 
@@ -88,9 +198,7 @@ export default function NavBar() {
         ? "border-gold text-gold"
         : "border-cream/30 text-cream";
 
-    // Language toggle
     const toggleLang = () => setLang(lang === "my" ? "en" : "my");
-    const langLabel = lang.toUpperCase();
 
     return (
         <nav
@@ -100,39 +208,85 @@ export default function NavBar() {
                 } py-5`}
         >
             <div className="w-full px-8 md:px-12 flex items-center justify-between">
-                {/* Logo */}
-                <Link href="/" className="group flex items-center gap-3">
+                <a
+                    href="/"
+                    className={`block transition-colors duration-300 w-20 group hover:text-gold`}
+                >
                     <svg
-                        id="Takana_Juo"
+                        id="Takana_Juo_Nav"
                         data-name="Takana Juo"
                         xmlns="http://www.w3.org/2000/svg"
                         viewBox="0 0 1000 375.385"
-                        className={`h-8 w-auto fill-current transition-colors duration-500 ${textColorClass}`}
-                        shapeRendering="geometricPrecision"
-                        textRendering="geometricPrecision"
+                        className="w-full h-auto"
                     >
+                        <defs>
+                            <linearGradient
+                                id="nav-new-gradient"
+                                x1="384.299"
+                                y1="-33.291"
+                                x2="615.702"
+                                y2="198.113"
+                                gradientTransform="matrix(1, 0, 0, -1, 0, 378)"
+                                gradientUnits="userSpaceOnUse"
+                            >
+                                <stop offset="0" stopColor="#e3a42d" />
+                                <stop offset="1" stopColor="#ffdd03" />
+                            </linearGradient>
+                            <linearGradient
+                                id="nav-new-gradient-2"
+                                x1="599.162"
+                                y1="91.145"
+                                x2="810.142"
+                                y2="302.125"
+                                xlinkHref="#nav-new-gradient"
+                            />
+                            <linearGradient
+                                id="nav-new-gradient-3"
+                                x1="664.671"
+                                y1="-74.372"
+                                x2="1068.23"
+                                y2="329.186"
+                                xlinkHref="#nav-new-gradient"
+                            />
+                            <linearGradient
+                                id="nav-new-gradient-4"
+                                x1="224.499"
+                                y1="125.791"
+                                x2="366.191"
+                                y2="267.483"
+                                xlinkHref="#nav-new-gradient"
+                            />
+                            <linearGradient
+                                id="nav-new-gradient-5"
+                                x1="33.328"
+                                y1="64.526"
+                                x2="196.432"
+                                y2="227.63"
+                                xlinkHref="#nav-new-gradient"
+                            />
+                        </defs>
                         <path
-                            d="M521.8,472.515A542.6,542.6,0,0,1,501.149,383c-.39-2.176-.78-4.331-1.149-6.507-.369,2.176-.759,4.331-1.149,6.507a542.6,542.6,0,0,1-20.65,89.515c-25.473,78.842-68.578,150.643-128.166,213.433l-1.663,1.724L500,687.59l151.628.082-1.663-1.724C590.377,623.158,547.272,551.357,521.8,472.515Z"
-                            transform="translate(0 -312.308)"
+                            fill={isLightSection ? "black" : "white"}
+                            d="M521.8,160.208a542.705,542.705,0,0,1-20.65-89.515c-.39-2.176-.78-4.331-1.149-6.507-.369,2.176-.759,4.331-1.149,6.507a542.705,542.705,0,0,1-20.65,89.515C452.728,239.049,409.623,310.85,350.035,373.64l-1.663,1.724L500,375.282l151.628.082-1.663-1.724C590.377,310.85,547.272,239.049,521.8,160.208Z"
                         />
                         <path
-                            d="M756.579,583.357l.287-.2.082-.349c7-25.678,13.342-51.911,18.884-77.959,8.847-41.566,15.908-84.034,20.978-126.216l.411-3.366-2.2,2.566a355.663,355.663,0,0,1-116.363,89.186,350.791,350.791,0,0,1-120.531,32.74l-1.375.123.513,1.272a513.052,513.052,0,0,0,79.109,135.146l.41.492.616-.143a314.574,314.574,0,0,0,119.176-53.287Z"
-                            transform="translate(0 -312.308)"
+                            fill={isLightSection ? "black" : "white"}
+                            d="M756.579,271.05l.287-.206.082-.348c7-25.679,13.342-51.912,18.884-77.959C784.679,150.971,791.74,108.5,796.81,66.32l.411-3.366-2.2,2.566a355.654,355.654,0,0,1-116.363,89.187A350.82,350.82,0,0,1,558.13,187.446l-1.375.123.513,1.273a511,511,0,0,0,30.81,64.432,513.836,513.836,0,0,0,48.3,70.713l.41.493.616-.144a316,316,0,0,0,65.7-21.9A315.375,315.375,0,0,0,756.579,271.05Z"
                         />
                         <path
-                            d="M1000,312.308l-3.079,4.084A393.106,393.106,0,0,1,816.413,450.2l-.575.206q-12.562,74.971-25.1,149.944a354.473,354.473,0,0,1-141.61,46.841l-1.95.226,34.3,39.9.308.369,223.035-.055Z"
-                            transform="translate(0 -312.308)"
+                            fill={isLightSection ? "black" : "white"}
+                            d="M1000,0l-3.079,4.085A393.558,393.558,0,0,1,905.62,91.9a393.121,393.121,0,0,1-89.207,46l-.575.2q-12.562,74.971-25.1,149.944a355.488,355.488,0,0,1-69.5,31.344,353.476,353.476,0,0,1-72.108,15.5l-1.95.225,34.3,39.9.308.37,223.035-.056Z"
                         />
                         <path
-                            d="M224.168,504.844c5.542,26.048,11.884,52.281,18.884,77.959l.082.349.287.2A314.574,314.574,0,0,0,362.6,636.644l.616.143.41-.492a513.919,513.919,0,0,0,48.3-70.713,511,511,0,0,0,30.81-64.433l.513-1.272-1.375-.123a350.791,350.791,0,0,1-120.531-32.74,355.663,355.663,0,0,1-116.363-89.186l-2.2-2.566.411,3.366C208.26,420.81,215.321,463.278,224.168,504.844Z"
-                            transform="translate(0 -312.308)"
+                            fill={isLightSection ? "black" : "white"}
+                            d="M224.168,192.537c5.542,26.047,11.884,52.28,18.884,77.959l.082.348.287.206a315.224,315.224,0,0,0,53.471,31.384,316.016,316.016,0,0,0,65.7,21.9l.616.144.41-.493a513.836,513.836,0,0,0,48.3-70.713,511,511,0,0,0,30.81-64.432l.513-1.273-1.375-.123a350.814,350.814,0,0,1-120.531-32.739A355.67,355.67,0,0,1,204.976,65.52l-2.2-2.566.411,3.366C208.26,108.5,215.321,150.971,224.168,192.537Z"
                         />
                         <path
-                            d="M352.826,647.42l-1.95-.226a354.473,354.473,0,0,1-141.61-46.841q-12.562-74.971-25.1-149.944l-.575-.206A393.106,393.106,0,0,1,3.079,316.392L0,312.308,95.184,687.637l223.035.055.308-.369Z"
-                            transform="translate(0 -312.308)"
+                            fill={isLightSection ? "black" : "white"}
+                            d="M352.826,335.112l-1.95-.225a353.476,353.476,0,0,1-72.108-15.5,355.488,355.488,0,0,1-69.5-31.344Q196.7,213.073,184.162,138.1l-.575-.2a393.121,393.121,0,0,1-89.207-46A393.552,393.552,0,0,1,3.08,4.09L0,0,95.184,375.329l223.035.056.308-.37Z"
                         />
                     </svg>
-                </Link>
+                </a>
 
                 {/* Desktop Links */}
                 <div className="hidden md:flex items-center gap-8">
@@ -142,11 +296,18 @@ export default function NavBar() {
                             href={link.href}
                             className={`${textColorClass} hover:text-gold font-heading text-xs uppercase tracking-[0.2em] transition-colors duration-300 relative group`}
                         >
-                            <RollingText height="1.5em">
+                            <NavRollingText>
                                 {t(link.key)}
-                            </RollingText>
+                            </NavRollingText>
                         </a>
                     ))}
+
+                    {/* Language Toggle — right after Events */}
+                    <RollingLangToggle
+                        currentLang={lang}
+                        onToggle={toggleLang}
+                        className={`${textColorClass} hover:text-gold font-heading text-xs uppercase tracking-[0.2em] transition-colors duration-300`}
+                    />
 
                     {/* Open/Closed Status */}
                     <div
@@ -157,22 +318,6 @@ export default function NavBar() {
                         />
                         {statusLabel}
                     </div>
-
-                    {/* Language Toggle */}
-                    <button
-                        onClick={toggleLang}
-                        className={`${textColorClass} hover:text-gold font-heading text-xs uppercase tracking-[0.15em] transition-colors duration-300 flex items-center gap-1`}
-                    >
-                        {langLabel}
-                        <svg
-                            className="w-3 h-3 opacity-60"
-                            fill="none"
-                            stroke="currentColor"
-                            viewBox="0 0 24 24"
-                        >
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                        </svg>
-                    </button>
                 </div>
 
                 {/* Mobile Hamburger */}
@@ -213,6 +358,13 @@ export default function NavBar() {
                         </a>
                     ))}
 
+                    {/* Mobile Language Toggle — right after Events */}
+                    <RollingLangToggle
+                        currentLang={lang}
+                        onToggle={toggleLang}
+                        className="text-cream/60 hover:text-gold font-heading text-sm uppercase tracking-[0.2em] transition-colors duration-300"
+                    />
+
                     {/* Mobile Status */}
                     <div
                         className={`mt-2 px-8 py-3.5 border ${mobileStatusClass} font-heading text-sm uppercase tracking-[0.2em] transition-all duration-300 backdrop-blur-sm flex items-center gap-2`}
@@ -222,22 +374,6 @@ export default function NavBar() {
                         />
                         {statusLabel}
                     </div>
-
-                    {/* Mobile Language Toggle */}
-                    <button
-                        onClick={toggleLang}
-                        className="text-cream/60 hover:text-gold font-heading text-sm uppercase tracking-[0.2em] transition-colors duration-300 flex items-center gap-1.5"
-                    >
-                        {langLabel}
-                        <svg
-                            className="w-3 h-3 opacity-60"
-                            fill="none"
-                            stroke="currentColor"
-                            viewBox="0 0 24 24"
-                        >
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                        </svg>
-                    </button>
                 </div>
             </div>
         </nav>
