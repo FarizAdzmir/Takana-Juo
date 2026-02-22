@@ -1,5 +1,5 @@
 import Image from "next/image";
-import AnimatedText from "./AnimatedText";
+import AnimatedText from "../UI/AnimatedText";
 import { motion } from "framer-motion";
 
 export interface MenuItemData {

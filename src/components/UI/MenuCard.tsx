@@ -2,17 +2,17 @@
 
 import { useLanguage } from "@/context/LanguageContext";
 
-interface MenuItem {
+export interface MenuItem {
     name: string;
     price: string;
 }
 
-interface MenuSection {
+export interface MenuCategoryData {
     title: string;
     items: MenuItem[];
 }
 
-const menuData: MenuSection[] = [
+const menuData: MenuCategoryData[] = [
     {
         title: "Nasi Goreng",
         items: [
