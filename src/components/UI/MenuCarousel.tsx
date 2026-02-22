@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { useLanguage } from "@/context/LanguageContext";
 
 export interface MenuItem {
     id: number;
@@ -9,6 +10,27 @@ export interface MenuItem {
 }
 
 export default function MenuCarousel({ item }: { item: MenuItem }) {
+    const { t } = useLanguage();
+
+    const getMainTranslation = (main: string) => {
+        if (main === "Nasi Goreng") return t("menu.categories.nasiGoreng");
+        return main;
+    };
+
+    const getSubTranslation = (sub: string) => {
+        switch (sub) {
+            case "Biasa": return t("menu.variations.biasa");
+            case "Telur": return t("menu.variations.telur");
+            case "Daging": return t("menu.variations.daging");
+            case "Ayam": return t("menu.variations.ayam");
+            case "Daging Telur": return t("menu.variations.dagingTelur");
+            case "Ayam Telur": return t("menu.variations.ayamTelur");
+            case "Ayam Daging": return t("menu.variations.ayamDaging");
+            case "Special": return t("menu.variations.special");
+            default: return sub; // Fallback
+        }
+    };
+
     return (
         <div className="flex-shrink-0 w-[280px] md:w-[230px] lg:w-[300px] xl:w-[320px] flex flex-col items-center group relative pb-8 mt-[130px] lg:mt-[150px]">
             {/* Card body */}
@@ -29,11 +51,11 @@ export default function MenuCarousel({ item }: { item: MenuItem }) {
                 <div className="w-full text-left mt-2 flex flex-col gap-0.5">
                     {/* Size Medium: Nasi Goreng */}
                     <h4 className="font-body font-medium text-sm md:text-base xl:text-lg text-charcoal/70">
-                        {item.main}
+                        {getMainTranslation(item.main)}
                     </h4>
                     {/* Size Big (NOT BOLD): Variation */}
                     <h3 className="font-body font-normal text-xl md:text-2xl xl:text-3xl text-black leading-tight tracking-tight whitespace-nowrap overflow-hidden text-ellipsis">
-                        {item.sub === "Original" ? "Classic" : item.sub}
+                        {getSubTranslation(item.sub)}
                     </h3>
                 </div>
 

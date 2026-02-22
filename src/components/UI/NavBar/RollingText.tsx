@@ -23,7 +23,7 @@ export default function RollingText({ children, className = "", height = "1.5em"
                             initial: { y: 0 },
                             hovered: { y: "-100%" }
                         }}
-                        transition={{ duration: 0.3, ease: [0.33, 1, 0.68, 1] }} // Cubic bezier for smooth "pop"
+                        transition={{ duration: 0.7, ease: [0.33, 1, 0.68, 1] }} // Cubic bezier for smooth "pop"
                     >
                         {children}
                     </motion.div>
@@ -34,7 +34,7 @@ export default function RollingText({ children, className = "", height = "1.5em"
                         initial: { y: "100%" },
                         hovered: { y: 0 }
                     }}
-                    transition={{ duration: 0.3, ease: [0.33, 1, 0.68, 1] }}
+                    transition={{ duration: 0.7, ease: [0.33, 1, 0.68, 1] }}
                 >
                     {children}
                 </motion.div>

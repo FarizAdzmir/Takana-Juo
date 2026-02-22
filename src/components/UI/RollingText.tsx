@@ -27,7 +27,7 @@ export default function RollingText({ children, className = "", height = "1.5em"
                             initial: { y: 0 },
                             hovered: { y: "-100%" },
                         }}
-                        transition={{ duration: 0.3, ease: [0.33, 1, 0.68, 1] }}
+                        transition={{ duration: 0.7, ease: [0.33, 1, 0.68, 1] }}
                     >
                         {children}
                     </motion.div>

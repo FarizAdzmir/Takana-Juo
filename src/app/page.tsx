@@ -132,6 +132,35 @@ export default function Home() {
         });
     }, []);
 
+    // Handle Menu's dynamic theme toggle (carousel = light, card = dark)
+    useEffect(() => {
+        if (!preloaderDone || !wrapperRef.current) return;
+
+        const handleMenuThemeChange = (e: Event) => {
+            const customEvent = e as CustomEvent<{ theme: string }>;
+            const menuEl = document.querySelector("#menu");
+            if (!menuEl) return;
+
+            // Only react if the NavBar is currently over the menu section
+            const menuRect = menuEl.getBoundingClientRect();
+            const viewportCenter = window.innerHeight / 2;
+            const isMenuInView = menuRect.top < viewportCenter && menuRect.bottom > viewportCenter;
+
+            if (isMenuInView) {
+                const targetColor = customEvent.detail.theme === "light" ? "#f5f5f0" : "#000000";
+                gsap.to(wrapperRef.current, {
+                    backgroundColor: targetColor,
+                    duration: 0.6,
+                    overwrite: "auto",
+                    ease: "power2.inOut",
+                });
+            }
+        };
+
+        window.addEventListener("menu-theme-change", handleMenuThemeChange);
+        return () => window.removeEventListener("menu-theme-change", handleMenuThemeChange);
+    }, [preloaderDone]);
+
     return (
         <>
             {!preloaderDone && (
@@ -148,9 +177,11 @@ export default function Home() {
                     <Story />
                 </div>
 
-                <Menu />
+                <div ref={(el) => { lightSectionsRef.current[1] = el }}>
+                    <Menu />
+                </div>
 
-                <div id="experience" ref={(el) => { lightSectionsRef.current[1] = el }}>
+                <div id="experience">
                     <Experience />
                 </div>
 

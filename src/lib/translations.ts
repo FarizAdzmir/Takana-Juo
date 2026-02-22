@@ -9,7 +9,7 @@ const translations = {
         experience: { my: "Pengalaman", en: "Experience" },
         events: { my: "Jamuan", en: "Events" },
         open: { my: "Buka", en: "Open" },
-        closed: { my: "Tutup", en: "Closed" },
+        closed: { my: "Tutup", en: "Close" },
     },
 
     // ==================== Hero ====================
@@ -60,6 +60,24 @@ const translations = {
         desserts: { my: "Pencuci Mulut", en: "Desserts" },
         drinks: { my: "Minuman", en: "Drinks" },
         viewFullMenu: { my: "Lihat Menu Penuh", en: "View Full Menu" },
+        categories: {
+            nasiGoreng: { my: "Nasi Goreng", en: "Nasi Goreng" },
+            addOn: { my: "Tambahan", en: "Add On" },
+        },
+        variations: {
+            biasa: { my: "Biasa", en: "Classic" },
+            telur: { my: "Telur", en: "Egg" },
+            daging: { my: "Daging", en: "Beef" },
+            ayam: { my: "Ayam", en: "Chicken" },
+            dagingTelur: { my: "Daging Telur", en: "Beef & Egg" },
+            ayamTelur: { my: "Ayam Telur", en: "Chicken & Egg" },
+            ayamDaging: { my: "Ayam Daging", en: "Chicken & Beef" },
+            special: { my: "Special", en: "Special" },
+        },
+        extras: {
+            extraCili: { my: "Extra Cili Potong", en: "Extra Cur Chillies" },
+            extraNasi: { my: "Extra Nasi", en: "Extra Rice" },
+        },
         // Item descriptions
         items: {
             ngOriginal: {
@@ -222,6 +240,13 @@ const translations = {
         inKualaLumpur: { my: "Di Kuala Lumpur", en: "In Kuala Lumpur" },
     },
 
+    // ==================== Reservation ====================
+    reservation: {
+        label: { my: "Makanan Asli Minang", en: "Authentic Minang Food" },
+        heading: { my: "Buat", en: "Make a" },
+        headingAccent: { my: "Tempahan", en: "Reservation" },
+    },
+
     // ==================== Events ====================
     events: {
         label: { my: "Authentic Minang Food", en: "Authentic Minang Food" },
@@ -266,18 +291,34 @@ const translations = {
 
     // ==================== Footer ====================
     footer: {
-        description: {
-            my: "Masakan Minangkabau autentik yang direka dengan keghairahan dan tradisi. Setiap hidangan menceritakan kisah warisan kami.",
-            en: "Authentic Minangkabau cuisine crafted with passion and tradition. Every dish tells a story of our heritage.",
+        quote: {
+            my: "RASA TRADISI MINANG",
+            en: "TASTE OF MINANG TRADITION",
         },
-        explore: { my: "Terokai", en: "Explore" },
-        ourStory: { my: "Cerita Kami", en: "Our Story" },
-        visitUs: { my: "Lawati Kami", en: "Visit Us" },
-        address: { my: "Alamat", en: "Address" },
-        hours: { my: "Waktu Operasi", en: "Hours" },
-        contact: { my: "Hubungi", en: "Contact" },
-        rights: { my: "Hak cipta terpelihara.", en: "All rights reserved." },
-        craftedWith: { my: "Direka dengan ♥ dan tradisi", en: "Crafted with ♥ and tradition" },
+        brand: {
+            my: "TAKANA JUO",
+            en: "TAKANA JUO",
+        },
+        description: {
+            my: "SAJIAN YANG DISEDIAKAN DENGAN SEPENUH HATI DAN DIPERKAYA OLEH WARISAN LELUHUR",
+            en: "MEALS PREPARED WITH PASSION AND ENRICHED BY ANCESTRAL HERITAGE",
+        },
+        contactText: {
+            my: "UNTUK TEMPAHAN SILA HUBUNGI KAMI +60 10-214 5431",
+            en: "FOR RESERVATION OR BOOKING PLEASE CONTACT US +60 10-214 5431",
+        },
+        connectTitle: {
+            my: "Hubungi kami",
+            en: "Connect with us",
+        },
+        privacyPolicy: {
+            my: "Dasar privasi",
+            en: "Privacy policy",
+        },
+        termsOfService: {
+            my: "Syarat perkhidmatan",
+            en: "Terms of service",
+        },
     },
 } as const;
 

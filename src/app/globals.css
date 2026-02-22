@@ -2,11 +2,10 @@
 
 @theme {
   /* === Colors === */
-  --color-gold: #EABF47;
+  --color-gold-dark: #EABF47;
+  --color-gold-light: #D1A61C;
   /* Fallback for borders/svgs */
   --color-theme-red: #900017;
-  --color-gold-light: #D4BA85;
-  --color-gold-dark: #A8894E;
   --color-cream: #FAF6F0;
   --color-cream-dark: #EDE5D8;
   --color-charcoal: #000000;
@@ -100,8 +99,14 @@
 }
 
 @layer utilities {
-  .text-gold {
-    background-image: linear-gradient(to right, #FFD38E, #EABF47, #D4AF37);
+  .text-gold-dark {
+    background-image: linear-gradient(to right, #EABF47, #EABF47);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+  .text-gold-light {
+    background-image: linear-gradient(to right, #D1A61C, #B18700);
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;

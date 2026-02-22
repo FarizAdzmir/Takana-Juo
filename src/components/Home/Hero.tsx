@@ -7,6 +7,7 @@ import { useLanguage } from "@/context/LanguageContext";
 import RollingText from "@/components/UI/RollingText";
 import GradientText from "@/components/UI/GradientText";
 import ShinyText from "@/components/UI/ShinyText";
+import Noise from "@/components/UI/Noise";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -69,15 +70,19 @@ export default function Hero({ isLoaded = false, preloadedImages = [] }: HeroPro
                 const imgWidth = img.naturalWidth;
                 const imgHeight = img.naturalHeight;
 
-                canvas.width = containerWidth;
-                canvas.height = containerHeight;
+                const dpr = window.devicePixelRatio || 1;
+                canvas.width = containerWidth * dpr;
+                canvas.height = containerHeight * dpr;
 
                 const { drawWidth, drawHeight, offsetX, offsetY } = getCoverDimensions(
                     containerWidth, containerHeight, imgWidth, imgHeight
                 );
 
-                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                ctx.save();
+                ctx.scale(dpr, dpr);
+                ctx.clearRect(0, 0, containerWidth, containerHeight);
                 ctx.drawImage(img, 0, 0, imgWidth, imgHeight, offsetX, offsetY, drawWidth, drawHeight);
+                ctx.restore();
             }
         };
 
@@ -141,6 +146,13 @@ export default function Hero({ isLoaded = false, preloadedImages = [] }: HeroPro
                     style={{ width: '100%', height: '100%' }}
                 />
                 <div className="absolute inset-0 bg-charcoal/30" />
+                <Noise
+                    patternSize={200}
+                    patternScaleX={1}
+                    patternScaleY={1}
+                    patternRefreshInterval={2}
+                    patternAlpha={15}
+                />
             </div>
 
             {/* Content Overlay */}
@@ -157,7 +169,7 @@ export default function Hero({ isLoaded = false, preloadedImages = [] }: HeroPro
                 {/* Main Title */}
                 <h1 className="font-trajan-bold text-6xl sm:text-7xl md:text-8xl lg:text-9xl font-bold leading-[0.9] tracking-tight mb-6 animate-slide-up flex justify-center">
                     <GradientText
-                        colors={["#FFD38E", "#EABF47", "#D4AF37"]}
+                        colors={["#EABF47", "#EABF47"]}
                         animationSpeed={8}
                         showBorder={false}
                         className="!overflow-visible w-full text-center whitespace-nowrap"
@@ -173,9 +185,9 @@ export default function Hero({ isLoaded = false, preloadedImages = [] }: HeroPro
                 {/* Tagline */}
                 <div className="flex flex-col items-center justify-center gap-6 mt-10 mb-16 animate-fade-in drop-shadow-md" style={{ animationDelay: "0.3s" }}>
                     <div className="flex items-center gap-3 opacity-70">
-                        <div className="w-12 md:w-20 h-[1px] bg-gradient-to-r from-transparent to-gold" />
-                        <div className="w-1.5 h-1.5 rotate-45 bg-gold" />
-                        <div className="w-12 md:w-20 h-[1px] bg-gradient-to-l from-transparent to-gold" />
+                        <div className="w-12 md:w-20 h-[1px] bg-gradient-to-r from-transparent to-gold-dark" />
+                        <div className="w-1.5 h-1.5 rotate-45 bg-gold-dark" />
+                        <div className="w-12 md:w-20 h-[1px] bg-gradient-to-l from-transparent to-gold-dark" />
                     </div>
 
                     <h2 className="font-trajan-regular text-cream/95 text-2xl md:text-3xl tracking-widest text-center">
@@ -193,7 +205,7 @@ export default function Hero({ isLoaded = false, preloadedImages = [] }: HeroPro
 
             {/* Scroll Indicator */}
             <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 animate-float z-20">
-                <RollingText className="text-cream/50 text-[10px] uppercase tracking-[0.3em] hover:text-gold transition-colors duration-300 cursor-pointer">
+                <RollingText className="text-cream/50 text-[10px] uppercase tracking-[0.3em] hover:text-gold-dark transition-colors duration-300 cursor-pointer">
                     {t("hero.scroll")}
                 </RollingText>
                 <div className="w-[1px] h-8 bg-gradient-to-b from-cream/50 to-transparent" />

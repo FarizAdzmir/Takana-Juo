@@ -32,6 +32,13 @@ export default function Menu() {
     const [viewMode, setViewMode] = useState<"carousel" | "card">("carousel");
     const x = useMotionValue(0);
 
+    // Dispatch custom event when viewMode changes so wrapper can react
+    useEffect(() => {
+        window.dispatchEvent(new CustomEvent("menu-theme-change", {
+            detail: { theme: viewMode === "carousel" ? "light" : "dark" }
+        }));
+    }, [viewMode]);
+
     /* Dynamic Card width + gap calculation based on clean breakpoints */
     const getScrollAmount = () => {
         if (typeof window === "undefined") return 304;
@@ -103,19 +110,19 @@ export default function Menu() {
     };
 
     return (
-        <section id="menu" className={`relative w-full py-32 md:py-40 overflow-hidden flex flex-col justify-center items-center min-h-screen transition-colors duration-700 ${viewMode === "carousel" ? "bg-[#EFEFEF]" : "bg-charcoal"}`}>
+        <section id="menu" data-theme={viewMode === "carousel" ? "light" : "dark"} className={`relative w-full py-32 md:py-40 overflow-hidden flex flex-col justify-center items-center min-h-screen transition-colors duration-700`}>
 
             {/* Header Area */}
             <div className="text-center mb-16 space-y-4">
                 <div className="flex items-center justify-center gap-3">
-                    <div className="w-12 h-[1px] bg-gold" />
-                    <span className="text-gold text-xs uppercase tracking-[0.4em] font-bold">
+                    <div className={`w-12 h-[1px] ${viewMode === "carousel" ? "bg-gold-light" : "bg-gold-dark"}`} />
+                    <span className={`text-xs uppercase tracking-[0.4em] font-bold ${viewMode === "carousel" ? "text-gold-light" : "text-gold-dark"}`}>
                         {t("menu.label")}
                     </span>
-                    <div className="w-12 h-[1px] bg-gold" />
+                    <div className={`w-12 h-[1px] ${viewMode === "carousel" ? "bg-gold-light" : "bg-gold-dark"}`} />
                 </div>
                 <h2 className={`font-trajan-bold text-[1.8rem] sm:text-3xl md:text-4xl lg:text-5xl transition-colors duration-700 ${viewMode === "carousel" ? "text-charcoal" : "text-white"}`}>
-                    {t("menu.heading")} <span className="text-gold font-normal">{t("menu.headingAccent")}</span>
+                    {t("menu.heading")} <span className={`font-normal ${viewMode === "carousel" ? "text-gold-light" : "text-gold-dark"}`}>{t("menu.headingAccent")}</span>
                 </h2>
 
                 {/* View Mode Toggle */}
@@ -124,9 +131,8 @@ export default function Menu() {
                     <svg width="0" height="0" className="absolute">
                         <defs>
                             <linearGradient id="gold-gradient-toggle" x1="0%" y1="0%" x2="100%" y2="0%">
-                                <stop offset="0%" stopColor="#FFD38E" />
-                                <stop offset="50%" stopColor="#EABF47" />
-                                <stop offset="100%" stopColor="#D4AF37" />
+                                <stop offset="0%" stopColor="#EABF47" />
+                                <stop offset="100%" stopColor="#EABF47" />
                             </linearGradient>
                         </defs>
                     </svg>
@@ -169,7 +175,7 @@ export default function Menu() {
                         <div className="hidden xl:flex flex-shrink-0 z-30 opacity-0 group-hover/slider:opacity-100 transition-opacity duration-300">
                             <button
                                 onClick={() => scrollBy(-1)}
-                                className="w-14 h-14 rounded-full bg-black hover:bg-gradient-to-r hover:from-[#FFD38E] hover:via-[#EABF47] hover:to-[#D4AF37] text-white flex items-center justify-center shadow-lg transition-all duration-300"
+                                className="w-14 h-14 rounded-full bg-black hover:bg-gradient-to-r hover:from-[#D1A61C] hover:to-[#B18700] text-white flex items-center justify-center shadow-lg transition-all duration-300"
                                 aria-label="Scroll left"
                             >
                                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M15 18l-6-6 6-6" /></svg>
@@ -183,9 +189,10 @@ export default function Menu() {
                                     ref={trackRef}
                                     drag="x"
                                     dragElastic={0}
+                                    dragDirectionLock
                                     onDragEnd={handleDragEnd}
                                     style={{ x }}
-                                    className="flex gap-6 md:gap-6 lg:gap-8 xl:gap-10 w-max cursor-grab active:cursor-grabbing"
+                                    className="flex gap-6 md:gap-6 lg:gap-8 xl:gap-10 w-max cursor-grab active:cursor-grabbing touch-pan-y"
                                 >
                                     {extendedItems.map((item, idx) => (
                                         <MenuCarousel key={`infinite-${item.id}-${idx}`} item={item} />
@@ -198,7 +205,7 @@ export default function Menu() {
                         <div className="hidden xl:flex flex-shrink-0 z-30 opacity-0 group-hover/slider:opacity-100 transition-opacity duration-300">
                             <button
                                 onClick={() => scrollBy(1)}
-                                className="w-14 h-14 rounded-full bg-black hover:bg-gradient-to-r hover:from-[#FFD38E] hover:via-[#EABF47] hover:to-[#D4AF37] text-white flex items-center justify-center shadow-lg transition-all duration-300"
+                                className="w-14 h-14 rounded-full bg-black hover:bg-gradient-to-r hover:from-[#D1A61C] hover:to-[#B18700] text-white flex items-center justify-center shadow-lg transition-all duration-300"
                                 aria-label="Scroll right"
                             >
                                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M9 18l6-6-6-6" /></svg>
@@ -213,7 +220,7 @@ export default function Menu() {
                                 key={`dot-${item.id}`}
                                 aria-label={`Go to menu item ${idx + 1}`}
                                 className={`transition-all duration-300 rounded-full border border-black/20 ${idx === activeIndex
-                                    ? "w-2.5 h-2.5 bg-gradient-to-r from-[#FFD38E] via-[#EABF47] to-[#D4AF37] border-none shadow-[0_0_10px_rgba(212,175,55,0.4)]"
+                                    ? "w-2.5 h-2.5 bg-gradient-to-r from-[#D1A61C] to-[#B18700] border-none shadow-[0_0_10px_rgba(209,166,28,0.4)]"
                                     : "w-2.5 h-2.5 bg-black/10 hover:bg-black/30"
                                     }`}
                                 onClick={() => {

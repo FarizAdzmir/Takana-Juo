@@ -33,22 +33,18 @@ export default function Experience() {
         <section
             className="relative py-24 md:py-32 overflow-hidden"
         >
-            {/* Decorative background element */}
-            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full border border-gold/5" />
-            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] h-[400px] rounded-full border border-gold/10" />
-
-            <div className="relative max-w-7xl mx-auto px-6">
+            <div className="relative max-w-7xl mx-auto px-6 z-10">
                 {/* Header */}
                 <div className="text-center mb-20 space-y-4">
                     <div className="flex items-center justify-center gap-3">
-                        <div className="w-8 h-[1px] bg-gold" />
-                        <span className="text-gold text-xs uppercase tracking-[0.3em]">
+                        <div className="w-8 h-[1px] bg-gold-dark" />
+                        <span className="text-gold-dark text-xs uppercase tracking-[0.3em]">
                             {t("experience.label")}
                         </span>
-                        <div className="w-8 h-[1px] bg-gold" />
+                        <div className="w-8 h-[1px] bg-gold-dark" />
                     </div>
                     <h2 className="font-trajan-bold text-4xl md:text-5xl text-cream">
-                        {t("experience.heading")} <span className="text-gold font-normal">{t("experience.headingAccent")}</span>
+                        {t("experience.heading")} <span className="text-gold-dark font-normal">{t("experience.headingAccent")}</span>
                     </h2>
                 </div>
 
@@ -57,12 +53,12 @@ export default function Experience() {
                     {features.map((feature) => (
                         <div
                             key={feature.titleKey}
-                            className="group relative bg-charcoal-light p-10 text-center border border-white/5 hover:border-gold/30 transition-all duration-500 hover:shadow-lg hover:-translate-y-1"
+                            className="group relative bg-black/80 backdrop-blur-md p-10 text-center border border-white/10 shadow-lg hover:border-gold-dark/40 transition-all duration-500 hover:-translate-y-1"
                         >
                             {/* Hover accent line */}
-                            <div className="absolute top-0 left-0 right-0 h-[2px] bg-gold scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left" />
+                            <div className="absolute top-0 left-0 right-0 h-[2px] bg-gold-dark scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left" />
 
-                            <span className="inline-block text-3xl text-gold mb-6 group-hover:scale-110 transition-transform duration-300">
+                            <span className="inline-block text-3xl text-gold-dark mb-6 group-hover:scale-110 transition-transform duration-300">
                                 {feature.icon}
                             </span>
                             <h3 className="font-trajan-regular text-xl text-cream mb-4">
@@ -76,11 +72,11 @@ export default function Experience() {
                 </div>
 
                 {/* Highlights Strip */}
-                <div className="bg-charcoal-light py-10 px-8">
+                <div className="bg-black/80 backdrop-blur-md border border-white/10 shadow-lg py-10 px-8">
                     <div className="grid grid-cols-2 md:grid-cols-3 gap-8">
                         {highlights.map((item) => (
                             <div key={item.labelKey} className="text-center">
-                                <p className="font-trajan-regular text-3xl md:text-4xl text-gold mb-2">
+                                <p className="font-trajan-regular text-3xl md:text-4xl text-gold-dark mb-2">
                                     {item.value}
                                 </p>
                                 <p className="text-cream/50 text-xs uppercase tracking-[0.2em]">

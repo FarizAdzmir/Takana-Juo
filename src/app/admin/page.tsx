@@ -108,7 +108,7 @@ export default function DashboardPage() {
     if (isCheckingAuth) {
         return (
             <div className="min-h-screen bg-charcoal flex items-center justify-center">
-                <div className="text-gold animate-pulse font-heading text-2xl">
+                <div className="text-gold-dark animate-pulse font-heading text-2xl">
                     Loading...
                 </div>
             </div>
@@ -183,7 +183,7 @@ export default function DashboardPage() {
                     <div className="mt-8 text-center">
                         <a
                             href="/"
-                            className="text-cream/30 text-xs uppercase tracking-[0.2em] hover:text-gold transition-colors duration-300"
+                            className="text-cream/30 text-xs uppercase tracking-[0.2em] hover:text-gold-dark transition-colors duration-300"
                         >
                             ← Back to Website
                         </a>
@@ -217,7 +217,7 @@ export default function DashboardPage() {
                 <div className="flex items-center gap-4">
                     <a
                         href="/"
-                        className="text-cream/40 text-xs uppercase tracking-[0.15em] hover:text-gold transition-colors duration-300"
+                        className="text-cream/40 text-xs uppercase tracking-[0.15em] hover:text-gold-dark transition-colors duration-300"
                     >
                         View Site
                     </a>
@@ -279,8 +279,8 @@ export default function DashboardPage() {
                                 onClick={() => handleOverride(null)}
                                 disabled={isUpdating}
                                 className={`px-6 py-2.5 text-xs uppercase tracking-[0.15em] font-heading transition-all duration-300 border ${status?.details.manualOverride === null
-                                    ? "bg-gold/20 border-gold text-gold"
-                                    : "border-cream/20 text-cream/50 hover:border-gold hover:text-gold"
+                                    ? "bg-gold-dark/20 border-gold-dark text-gold-dark"
+                                    : "border-cream/20 text-cream/50 hover:border-gold-dark hover:text-gold-dark"
                                     } disabled:opacity-50`}
                             >
                                 Auto
