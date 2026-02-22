@@ -1,70 +1,90 @@
 "use client";
 
+import Image from "next/image";
 import { useLanguage } from "@/context/LanguageContext";
 
 export default function Story() {
     const { t } = useLanguage();
 
     return (
-        <section className="relative py-24 md:py-32 overflow-hidden">
-            {/* Decorative Corner Elements */}
-            <div className="absolute top-12 left-12 w-24 h-24 border-t border-l border-gold/20" />
-            <div className="absolute bottom-12 right-12 w-24 h-24 border-b border-r border-gold/20" />
+        <section id="story" className="relative py-16 md:py-20 lg:py-16 h-auto lg:h-[90vh] lg:min-h-[800px] flex items-center bg-cream overflow-hidden">
+            {/* Elegant Background Texture / Pattern */}
+            <div className="absolute inset-0 opacity-[0.03]" style={{ backgroundImage: 'radial-gradient(circle at 2px 2px, black 1px, transparent 0)', backgroundSize: '32px 32px' }}></div>
 
-            <div className="max-w-7xl mx-auto px-6">
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+            {/* Decorative Corner Elements */}
+            <div className="absolute top-12 left-12 w-24 h-24 border-t border-l border-gold/30" />
+            <div className="absolute bottom-12 right-12 w-24 h-24 border-b border-r border-gold/30" />
+
+            <div className="relative z-10 max-w-7xl mx-auto px-6 lg:px-12 w-full mt-10 md:mt-0">
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
                     {/* Image Side */}
-                    <div className="relative">
-                        <div className="aspect-[4/5] bg-charcoal/5 overflow-hidden">
-                            <div className="w-full h-full bg-gradient-to-br from-warm-brown/20 to-gold/10 flex items-center justify-center">
-                                <div className="text-center space-y-4">
-                                    <div className="w-20 h-20 mx-auto rounded-full border-2 border-gold/30 flex items-center justify-center">
-                                        <span className="font-heading text-gold/50 text-3xl">味</span>
-                                    </div>
-                                    <p className="text-charcoal/30 text-sm uppercase tracking-[0.2em]">
-                                        {t("story.ourKitchen")}
-                                    </p>
-                                </div>
+                    <div className="relative w-full max-w-sm mx-auto lg:max-w-md xl:max-w-lg group">
+                        <div className="aspect-[4/5] bg-cream-dark overflow-hidden relative shadow-2xl">
+                            {/* Inner Frame */}
+                            <div className="absolute inset-5 border border-gold/40 z-10 transition-transform duration-700 group-hover:scale-[0.98] pointer-events-none" />
+
+                            {/* Main Display Area */}
+                            <div className="w-full h-full relative transition-transform duration-1000 group-hover:scale-105">
+                                <Image
+                                    src="/images/Profile-Zam.jpg"
+                                    alt="Takana Juo Founder"
+                                    fill
+                                    className="object-cover object-center grayscale-[0.2]"
+                                    sizes="(max-width: 1024px) 100vw, 50vw"
+                                />
+                                {/* Optional subtle dark overlay to match theme */}
+                                <div className="absolute inset-0 bg-charcoal/10 mix-blend-multiply pointer-events-none" />
                             </div>
                         </div>
-                        {/* Offset decorative frame */}
-                        <div className="absolute -bottom-4 -right-4 w-full h-full border border-gold/20 -z-10" />
+                        {/* Offset decorative block shadow */}
+                        <div className="absolute -bottom-6 -right-6 lg:-bottom-8 lg:-right-8 w-full h-full border border-theme-red/60 bg-theme-red/5 -z-10 transition-transform duration-500 group-hover:translate-x-2 group-hover:translate-y-2" />
                     </div>
 
                     {/* Text Side */}
-                    <div className="space-y-8">
+                    <div className="space-y-6 lg:space-y-8">
+                        {/* Header Area */}
                         <div className="space-y-4">
-                            <div className="flex items-center gap-3">
-                                <div className="w-8 h-[1px] bg-gold" />
-                                <span className="text-gold text-xs uppercase tracking-[0.3em]">
+                            <div className="flex items-center gap-4">
+                                <div className="w-12 h-[1px] bg-gradient-to-r from-[#FFD38E] via-[#EABF47] to-[#D4AF37]" />
+                                <span className="text-gold text-xs uppercase tracking-[0.4em] font-bold">
                                     {t("story.label")}
                                 </span>
                             </div>
-                            <h2 className="font-heading text-4xl md:text-5xl text-charcoal leading-tight">
-                                {t("story.heading")}{" "}
-                                <span className="text-gold italic">{t("story.headingAccent")}</span>
+                            <h2 className="font-trajan-bold text-[1.8rem] sm:text-3xl md:text-4xl lg:text-4xl xl:text-[2.8rem] text-charcoal leading-none tracking-tight whitespace-nowrap">
+                                {t("story.heading")} <span className="text-gold font-normal">{t("story.headingAccent")}</span>
                             </h2>
                         </div>
 
-                        <div className="space-y-6 text-charcoal/70 leading-relaxed">
+                        {/* Story Paragraphs */}
+                        <div className="space-y-4 text-charcoal/80 text-base lg:text-md leading-relaxed font-body">
                             <p>{t("story.p1")}</p>
                             <p>{t("story.p2")}</p>
                             <p>{t("story.p3")}</p>
                         </div>
 
-                        {/* Stats */}
-                        <div className="grid grid-cols-2 gap-6 pt-4 border-t border-charcoal/10">
-                            <div>
-                                <p className="font-heading text-3xl text-gold">
+                        {/* Stats / Highlights */}
+                        <div className="grid grid-cols-3 gap-4 lg:gap-6 pt-8 border-t border-charcoal/20">
+                            <div className="text-center">
+                                <p className="font-trajan-bold text-2xl md:text-3xl lg:text-4xl text-gold mb-2 h-12 flex items-center justify-center">
                                     {new Date().getFullYear() - 1995}
                                 </p>
-                                <p className="text-charcoal/50 text-xs uppercase tracking-[0.15em] mt-1">
+                                <p className="text-charcoal/60 font-trajan-regular text-[10px] sm:text-xs md:text-sm uppercase tracking-[0.2em]">
                                     {t("story.years")}
                                 </p>
                             </div>
-                            <div>
-                                <p className="font-heading text-3xl text-gold">∞</p>
-                                <p className="text-charcoal/50 text-xs uppercase tracking-[0.15em] mt-1">
+                            <div className="text-center">
+                                <p className="font-trajan-bold text-2xl md:text-3xl lg:text-4xl text-gold mb-2 h-12 flex items-center justify-center">
+                                    100%
+                                </p>
+                                <p className="text-charcoal/60 font-trajan-regular text-[10px] sm:text-xs md:text-sm uppercase tracking-[0.2em]">
+                                    {t("story.tradition")}
+                                </p>
+                            </div>
+                            <div className="text-center">
+                                <p className="font-trajan-bold text-5xl md:text-6xl lg:text-7xl text-gold mb-2 h-12 flex items-center justify-center">
+                                    ∞
+                                </p>
+                                <p className="text-charcoal/60 font-trajan-regular text-[10px] sm:text-xs md:text-sm uppercase tracking-[0.2em]">
                                     {t("story.passion")}
                                 </p>
                             </div>

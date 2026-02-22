@@ -2,13 +2,15 @@
 
 @theme {
   /* === Colors === */
-  --color-gold: #C8A96E;
+  --color-gold: #EABF47;
+  /* Fallback for borders/svgs */
+  --color-theme-red: #900017;
   --color-gold-light: #D4BA85;
   --color-gold-dark: #A8894E;
   --color-cream: #FAF6F0;
   --color-cream-dark: #EDE5D8;
   --color-charcoal: #000000;
-  --color-charcoal-light: #2D2D2D;
+  --color-charcoal-light: #1A1A1A;
   --color-warm-brown: #3E2723;
   --color-warm-brown-light: #5D4037;
   --color-burgundy: #6B1D2A;
@@ -18,6 +20,8 @@
   /* === Fonts === */
   --font-heading: "Playfair Display", serif;
   --font-body: "Inter", sans-serif;
+  --font-trajan-regular: var(--font-trajan-regular), serif;
+  --font-trajan-bold: var(--font-trajan-bold), serif;
 
   /* === Animation === */
   --animate-fade-in: fade-in 0.8s ease-out forwards;
@@ -73,8 +77,8 @@
 
   body {
     font-family: var(--font-body);
-    background-color: var(--color-cream);
-    color: var(--color-charcoal);
+    background-color: var(--color-charcoal);
+    color: var(--color-cream);
     overflow-x: hidden;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
@@ -92,5 +96,14 @@
   ::selection {
     background-color: var(--color-gold);
     color: var(--color-charcoal);
+  }
+}
+
+@layer utilities {
+  .text-gold {
+    background-image: linear-gradient(to right, #FFD38E, #EABF47, #D4AF37);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
   }
 }

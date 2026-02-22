@@ -42,9 +42,9 @@ export default function Footer() {
 
             {/* Middle Section: Main Text */}
             <div className="flex-grow flex items-center px-6 md:px-12">
-                <h1 className="font-heading text-5xl md:text-7xl lg:text-9xl leading-[0.9] text-cream max-w-6xl">
+                <h1 className="font-trajan-bold text-5xl md:text-7xl lg:text-9xl leading-[0.9] text-cream max-w-6xl">
                     Taste of{" "}
-                    <span className="text-gold italic font-serif">Minang</span>{" "}
+                    <span className="text-gold font-normal">Minang</span>{" "}
                     <br className="hidden md:block" />
                     Tradition.
                 </h1>
@@ -54,31 +54,64 @@ export default function Footer() {
             <div className="w-full px-6 py-8 md:px-12 md:py-10 flex flex-col md:flex-row justify-between items-end gap-8 border-t border-cream/5 mt-8 md:mt-0">
                 {/* Left: Big Logo & Copyright */}
                 <div className="flex flex-col gap-6 w-full md:w-auto">
-                    <div className="w-32 md:w-48 opacity-90">
+                    <div className="w-16 md:w-24 opacity-90">
                         <svg
-                            viewBox="0 0 1000 375.385"
-                            className="w-full h-auto text-cream"
+                            id="Takana_Juo_Footer"
+                            xmlns="http://www.w3.org/2000/svg"
+                            xmlnsXlink="http://www.w3.org/1999/xlink"
+                            viewBox="0 0 1000 859.54"
+                            className="w-full h-auto drop-shadow-sm"
                         >
-                            <path
-                                fill="currentColor"
-                                d="M521.8,160.208a542.705,542.705,0,0,1-20.65-89.515c-.39-2.176-.78-4.331-1.149-6.507-.369,2.176-.759,4.331-1.149,6.507a542.705,542.705,0,0,1-20.65,89.515C452.728,239.049,409.623,310.85,350.035,373.64l-1.663,1.724L500,375.282l151.628.082-1.663-1.724C590.377,310.85,547.272,239.049,521.8,160.208Z"
-                            />
-                            <path
-                                fill="currentColor"
-                                d="M756.579,271.05l.287-.206.082-.348c7-25.679,13.342-51.912,18.884-77.959C784.679,150.971,791.74,108.5,796.81,66.32l.411-3.366-2.2,2.566a355.654,355.654,0,0,1-116.363,89.187A350.82,350.82,0,0,1,558.13,187.446l-1.375.123.513,1.273a511,511,0,0,0,30.81,64.432,513.836,513.836,0,0,0,48.3,70.713l.41.493.616-.144a316,316,0,0,0,65.7-21.9A315.375,315.375,0,0,0,756.579,271.05Z"
-                            />
-                            <path
-                                fill="currentColor"
-                                d="M1000,0l-3.079,4.085A393.558,393.558,0,0,1,905.62,91.9a393.121,393.121,0,0,1-89.207,46l-.575.2q-12.562,74.971-25.1,149.944a355.488,355.488,0,0,1-69.5,31.344,353.476,353.476,0,0,1-72.108,15.5l-1.95.225,34.3,39.9.308.37,223.035-.056Z"
-                            />
-                            <path
-                                fill="currentColor"
-                                d="M224.168,192.537c5.542,26.047,11.884,52.28,18.884,77.959l.082.348.287.206a315.224,315.224,0,0,0,53.471,31.384,316.016,316.016,0,0,0,65.7,21.9l.616.144.41-.493a513.836,513.836,0,0,0,48.3-70.713,511,511,0,0,0,30.81-64.432l.513-1.273-1.375-.123a350.814,350.814,0,0,1-120.531-32.739A355.67,355.67,0,0,1,204.976,65.52l-2.2-2.566.411,3.366C208.26,108.5,215.321,150.971,224.168,192.537Z"
-                            />
-                            <path
-                                fill="currentColor"
-                                d="M352.826,335.112l-1.95-.225a353.476,353.476,0,0,1-72.108-15.5,355.488,355.488,0,0,1-69.5-31.344Q196.7,213.073,184.162,138.1l-.575-.2a393.121,393.121,0,0,1-89.207-46A393.552,393.552,0,0,1,3.08,4.09L0,0,95.184,375.329l223.035.056.308-.37Z"
-                            />
+                            <defs>
+                                <linearGradient
+                                    id="footer-linear-gradient"
+                                    x1="806.82"
+                                    y1="-67.77"
+                                    x2="806.82"
+                                    y2="505.3"
+                                    gradientTransform="matrix(1, 0, 0, -1, 0, 791.77)"
+                                    gradientUnits="userSpaceOnUse"
+                                >
+                                    <stop offset="0" stopColor="#d4af37" />
+                                    <stop offset="0.55" stopColor="#eabf47" />
+                                    <stop offset="1" stopColor="#ffd38e" />
+                                </linearGradient>
+                                <linearGradient
+                                    id="footer-linear-gradient-2"
+                                    x1="500"
+                                    y1="59.79"
+                                    x2="500"
+                                    y2="791.77"
+                                    gradientTransform="matrix(1, 0, 0, -1, 0, 791.77)"
+                                    gradientUnits="userSpaceOnUse"
+                                >
+                                    <stop offset="0" stopColor="#d4af37" />
+                                    <stop offset="0.29" stopColor="#eabf47" />
+                                    <stop offset="1" stopColor="#ffd38e" />
+                                </linearGradient>
+                                <linearGradient
+                                    id="footer-linear-gradient-3"
+                                    x1="193.18"
+                                    y1="-67.77"
+                                    x2="193.18"
+                                    y2="505.3"
+                                    xlinkHref="#footer-linear-gradient"
+                                />
+                            </defs>
+                            <g id="Logo_Footer">
+                                <path
+                                    d="M967.79,598.33c-18.94,56.63-39.65,95.76-54.48,119.34-31.18,49.6-61.18,97.32-117.86,123.59-76.9,35.64-155.66,9.9-181.82,0a316.93,316.93,0,0,0,90.91-22.73c132.81-55.35,184.33-186,196.41-220.2,10.27-29.09,22.46-74.78,22.3-133.66a642.06,642.06,0,0,1-59.61,45.84V424.44a601.67,601.67,0,0,0,126.43-138C1000.63,346,1013,463.3,967.79,598.33Z"
+                                    style={{ fill: "url(#footer-linear-gradient)" }}
+                                />
+                                <path
+                                    d="M767.32,642.89a500.18,500.18,0,0,1-59.75-55.37,627.5,627.5,0,0,0,82-33.75c9.91-4.91,19.43-10,28.59-15.11V457.25A584.07,584.07,0,0,1,767.32,487a595.12,595.12,0,0,1-105.68,42.48C605.16,446.77,566.82,331,566.82,331,525,204.57,507.7,84.18,500,0c-7.7,84.18-25,204.57-66.82,331,0,0-38.34,115.75-94.82,198.41A594.36,594.36,0,0,1,232.68,487a581.54,581.54,0,0,1-50.86-29.7v81.41q13.74,7.71,28.59,15.12a628.89,628.89,0,0,0,82,33.75,500.09,500.09,0,0,1-59.75,55.36,515.83,515.83,0,0,1-66.82,44.55L210.41,732A716.15,716.15,0,0,0,350.5,603.77a672.71,672.71,0,0,0,299,0A715.79,715.79,0,0,0,789.59,732l44.55-44.54A515.76,515.76,0,0,1,767.32,642.89ZM500,553.77a597.66,597.66,0,0,1-104.39-10.52c22.39-35.11,43.5-82,82.12-167.68a301.5,301.5,0,0,0,10.8-29c5.47-17.06,11-39.36,11.47-60.16.45,20.8,6,43.1,11.48,60.16a298.85,298.85,0,0,0,10.8,29c38.61,85.7,59.72,132.57,82.11,167.68A597.66,597.66,0,0,1,500,553.77Z"
+                                    style={{ fill: "url(#footer-linear-gradient-2)" }}
+                                />
+                                <path
+                                    d="M32.21,598.33C51.15,655,71.86,694.09,86.69,717.67c31.18,49.6,61.18,97.32,117.86,123.59,76.9,35.64,155.66,9.9,181.82,0a316.93,316.93,0,0,1-90.91-22.73c-132.81-55.35-184.33-186-196.41-220.2a396.48,396.48,0,0,1-22.3-133.66,642.2,642.2,0,0,0,59.62,45.84V424.44a601.49,601.49,0,0,1-126.44-138C-.63,346-12.95,463.3,32.21,598.33Z"
+                                    style={{ fill: "url(#footer-linear-gradient-3)" }}
+                                />
+                            </g>
                         </svg>
                     </div>
                     <p className="text-cream/30 text-[10px] uppercase tracking-[0.2em]">
@@ -93,7 +126,7 @@ export default function Footer() {
                         href="https://www.instagram.com/takanajuoofficial"
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="w-10 h-10 rounded-full border border-cream/10 flex items-center justify-center hover:border-gold hover:text-gold transition-colors duration-300"
+                        className="w-10 h-10 rounded-full border border-cream/10 flex items-center justify-center hover:border-gold hover:text-[#EABF47] transition-colors duration-300"
                         aria-label="Instagram"
                     >
                         <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
@@ -103,7 +136,7 @@ export default function Footer() {
                         href="https://api.whatsapp.com/send/?phone=60102145431"
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="w-10 h-10 rounded-full border border-cream/10 flex items-center justify-center hover:border-gold hover:text-gold transition-colors duration-300"
+                        className="w-10 h-10 rounded-full border border-cream/10 flex items-center justify-center hover:border-gold hover:text-[#EABF47] transition-colors duration-300"
                         aria-label="WhatsApp"
                     >
                         <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor">

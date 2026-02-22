@@ -5,6 +5,8 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useLanguage } from "@/context/LanguageContext";
 import RollingText from "@/components/UI/RollingText";
+import GradientText from "@/components/UI/GradientText";
+import ShinyText from "@/components/UI/ShinyText";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -145,27 +147,45 @@ export default function Hero({ isLoaded = false, preloadedImages = [] }: HeroPro
             <div className="relative z-10 text-center px-6 max-w-4xl mx-auto">
                 {/* Decorative Element */}
                 <div className="flex items-center justify-center gap-4 mb-8 animate-fade-in">
-                    <div className="w-12 h-[1px] bg-gold" />
-                    <span className="text-gold text-xs uppercase tracking-[0.4em] font-body">
+                    <div className="w-12 h-[1px] bg-[#C7C7C7]" />
+                    <span className="text-white text-xs uppercase tracking-[0.4em] font-body">
                         {t("hero.subtitle")}
                     </span>
-                    <div className="w-12 h-[1px] bg-gold" />
+                    <div className="w-12 h-[1px] bg-[#C7C7C7]" />
                 </div>
 
                 {/* Main Title */}
-                <h1 className="font-heading text-cream text-6xl sm:text-7xl md:text-8xl lg:text-9xl font-bold leading-[0.9] tracking-tight mb-6 animate-slide-up">
-                    Takana
-                    <br />
-                    <span className="text-gold italic font-normal">Juo</span>
+                <h1 className="font-trajan-bold text-6xl sm:text-7xl md:text-8xl lg:text-9xl font-bold leading-[0.9] tracking-tight mb-6 animate-slide-up flex justify-center">
+                    <GradientText
+                        colors={["#FFD38E", "#EABF47", "#D4AF37"]}
+                        animationSpeed={8}
+                        showBorder={false}
+                        className="!overflow-visible w-full text-center whitespace-nowrap"
+                    >
+                        <span className="block text-center pb-2">
+                            Takana
+                            <br />
+                            <span className="font-normal">Juo</span>
+                        </span>
+                    </GradientText>
                 </h1>
 
                 {/* Tagline */}
-                <p
-                    className="text-cream/90 text-lg md:text-xl font-body max-w-lg mx-auto mb-12 leading-relaxed animate-fade-in drop-shadow-md"
-                    style={{ animationDelay: "0.3s" }}
-                >
-                    {t("hero.tagline")}
-                </p>
+                <div className="flex flex-col items-center justify-center gap-6 mt-10 mb-16 animate-fade-in drop-shadow-md" style={{ animationDelay: "0.3s" }}>
+                    <div className="flex items-center gap-3 opacity-70">
+                        <div className="w-12 md:w-20 h-[1px] bg-gradient-to-r from-transparent to-gold" />
+                        <div className="w-1.5 h-1.5 rotate-45 bg-gold" />
+                        <div className="w-12 md:w-20 h-[1px] bg-gradient-to-l from-transparent to-gold" />
+                    </div>
+
+                    <h2 className="font-trajan-regular text-cream/95 text-2xl md:text-3xl tracking-widest text-center">
+                        {t("hero.tagline1")}
+                    </h2>
+
+                    <p className="font-body text-cream/80 text-[10px] md:text-xs uppercase tracking-[0.3em] md:tracking-[0.4em] max-w-md mx-auto text-center leading-loose whitespace-pre-line">
+                        {t("hero.tagline2")}
+                    </p>
+                </div>
 
                 {/* CTAs */}
 

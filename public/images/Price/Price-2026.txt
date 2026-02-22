@@ -1,0 +1,13 @@
+Menu
+Nasi Goreng			RM 4.00
+Nasi Goreng Telur		RM 6.00
+Nasi Goreng Daging		RM 7.00
+Nasi Goreng Ayam		RM 9.00
+Nasi Goreng Daging Telur	RM 8.00
+Nasi Goreng Ayam Telur 		RM 10.00
+Nasi Goreng Ayam Daging		RM 11.00
+Nasi Goreng Special		RM 12.00
+
+Add On
+Extra Cili Potong		RM 1.00
+Extra Nasi			RM 1.00

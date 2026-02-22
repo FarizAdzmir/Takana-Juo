@@ -15,10 +15,8 @@ const translations = {
     // ==================== Hero ====================
     hero: {
         subtitle: { my: "Authentic Minang Food", en: "Authentic Minang Food" },
-        tagline: {
-            my: "Di mana warisan bertemu cita rasa. Perjalanan melalui tradisi dari Minang.",
-            en: "Where heritage meets flavor. A journey through the rich traditions of Minang.",
-        },
+        tagline1: { my: "THIS IS OUR LEGACY", en: "THIS IS OUR LEGACY" },
+        tagline2: { my: "ENJOY THE SIMPLE PLEASURES", en: "ENJOY THE SIMPLE PLEASURES" },
         viewMenu: { my: "Lihat Menu", en: "View Menu" },
         reservation: { my: "Tempahan", en: "Reservation" },
         scroll: { my: "Scroll", en: "Scroll" },
@@ -31,17 +29,18 @@ const translations = {
         headingAccent: { my: "Rasa", en: "Flavor" },
         p1: {
             my: "Berasal dari Bukit Tinggi, Takana Juo membawa semangat rasa Minangkabau — ringkas, mengenyangkan, dan dekat di hati. Namanya yang bermaksud “mengingati rasa” lahir daripada sebuah perjalanan merantau, apabila seorang bapa berhijrah dari Indonesia ke Malaysia dengan harapan untuk membina perniagaan kecil demi menyara keluarga.",
-            en: "Born in Bukit Tinggi, Takana Juo carries the spirit of Minangkabau flavors — bold, comforting, and rooted in everyday tradition. The name, meaning “remember the flavors,” reflects a journey that crossed borders, when a father travelled from Indonesia to Malaysia with a simple hope: to build a small food business that could feed his family.",
+            en: "From Bukit Tinggi comes the spirit of Minangkabau flavors—bold, comforting, and deeply rooted in everyday tradition. The name Takana Juo, meaning “Will Always Be Remembered,” reflects home-cooked meals prepared with passion and enriched by ancestral heritage.",
         },
         p2: {
             my: "Bermula secara sederhana di atas beca, perniagaan ini mula menjual nasi goreng di Pasar Minggu Kampung Baru pada tahun 1995, beroperasi dari jam 3 petang hingga 12 malam. Fokusnya jelas dan jujur — nasi goreng panas dimasak terus, disajikan bersama lauk pilihan seperti telur, ayam, atau daging. Semua resipi adalah olahan sendiri, diasah melalui masa, usaha, dan kesungguhan.",
-            en: "Starting humbly atop a beca, the family began selling nasi goreng at Pasar Minggu Kampung Baru in 1995, operating from 3 in the afternoon until midnight. The focus was simple and honest — nasi goreng cooked to order, served with familiar side dishes like egg, chicken, or beef. Every recipe was self-crafted, refined through long nights, repetition, and care.",
+            en: "The journey began humbly in 1995 at Pasar Minggu Kampung Baru. Using a beca (trishaw), the family sold nasi goreng from 3:00 p.m. until midnight. The focus was simple and honest: freshly cooked-to-order nasi goreng, served with familiar sides such as egg, chicken, or beef. Each recipe was carefully preserved and refined over time through repetition, patience, and care.",
         },
         p3: {
             my: "Lebih daripada sekadar perniagaan, Takana Juo dibina untuk kelangsungan hidup dan masa depan keluarga. Apa yang bermula kecil kini menjadi legasi yang terus bertahan — masih kekal berniaga hingga ke hari ini, menyajikan rasa yang sederhana, ikhlas, dan penuh kenangan.",
-            en: "More than a business, Takana Juo was built to put food on the table and keep a family moving forward. What began as a small roadside effort has grown into a lasting legacy — still operating strong today, serving the same comforting flavors that have followed generations through time.",
+            en: "More than just a business, Takana Juo was built to put food on the table and move the family forward. What started as a small roadside effort has grown into a lasting tradition—still operating strong today, serving the same comforting flavors that have accompanied generations through time.",
         },
         years: { my: "Tahun", en: "Years" },
+        tradition: { my: "Tradisi", en: "Tradition" },
         dishes: { my: "Hidangan", en: "Dishes" },
         passion: { my: "Dedikasi", en: "Passion" },
         ourKitchen: { my: "Dapur Kami", en: "Our Kitchen" },
@@ -63,6 +62,54 @@ const translations = {
         viewFullMenu: { my: "Lihat Menu Penuh", en: "View Full Menu" },
         // Item descriptions
         items: {
+            ngOriginal: {
+                desc: {
+                    my: "Resepi nasi goreng asli yang dimasak dengan sempurna dan beraroma tradisional.",
+                    en: "The original fried rice recipe cooked to perfection with traditional aromas.",
+                }
+            },
+            ngTelur: {
+                desc: {
+                    my: "Nasi goreng dihidangkan bersama telur mata yang segar dan sedap.",
+                    en: "Fried rice served with a fresh and delicious sunny-side-up egg.",
+                }
+            },
+            ngDaging: {
+                desc: {
+                    my: "Nasi goreng lazat dengan potongan daging yang empuk dan berperisa.",
+                    en: "Delicious fried rice with tender and flavorful slices of beef.",
+                }
+            },
+            ngAyam: {
+                desc: {
+                    my: "Nasi goreng hangat dengan potongan ayam goreng rempah asli.",
+                    en: "Warm fried rice with pieces of authentic spiced fried chicken.",
+                }
+            },
+            ngDagingTelur: {
+                desc: {
+                    my: "Kombinasi klasik daging empuk dan telur mata mendarat sempurna di atas nasi goreng.",
+                    en: "Classic combination of tender beef and a sunny-side-up egg landing perfectly on fried rice.",
+                }
+            },
+            ngAyamTelur: {
+                desc: {
+                    my: "Nasi goreng mantap bersama ayam berempah dan telur mata menambat selera.",
+                    en: "Robust fried rice with spiced chicken and a sunny-side-up egg to capture your appetite.",
+                }
+            },
+            ngAyamDaging: {
+                desc: {
+                    my: "Hidangan nasi goreng mewah dengan dua jenis lauk, ayam dan daging yang meriah.",
+                    en: "Lavish fried rice dish with two types of protein, joyous chicken and beef.",
+                }
+            },
+            ngSpecial: {
+                desc: {
+                    my: "Hidangan istimewa sebenar: Nasi goreng yang disatukan dengan ayam, daging, dan telur dalam satu hidangan sempurna.",
+                    en: "A true special: Fried rice brought together with chicken, beef, and egg in one perfect dish.",
+                }
+            },
             perkedel: {
                 desc: {
                     my: "Perkedel jagung rangup dengan herba dan rempah wangi, dihidang dengan sambal hijau",
