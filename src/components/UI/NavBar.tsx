@@ -178,36 +178,36 @@ export default function NavBar() {
     };
 
     // Shared Logo SVG element
-    const logoSvg = (size: string) => (
+    const logoSvg = (size: string, idSuffix: string) => (
         <motion.div
             animate={{ scale: isLogoHovered ? 1.05 : 1 }}
             transition={{ duration: 0.3 }}
             className={`${size} flex items-center justify-center`}
         >
             <svg
-                id="Takana_Juo_Nav"
+                id={`Takana_Juo_Nav_${idSuffix}`}
                 xmlns="http://www.w3.org/2000/svg"
                 xmlnsXlink="http://www.w3.org/1999/xlink"
                 viewBox="0 0 1000 859.54"
                 className="w-full h-auto drop-shadow-sm"
             >
                 <defs>
-                    <linearGradient id="nav-linear-gradient" x1="806.82" y1="-67.77" x2="806.82" y2="505.3" gradientTransform="matrix(1, 0, 0, -1, 0, 791.77)" gradientUnits="userSpaceOnUse">
+                    <linearGradient id={`nav-linear-gradient-${idSuffix}`} x1="806.82" y1="-67.77" x2="806.82" y2="505.3" gradientTransform="matrix(1, 0, 0, -1, 0, 791.77)" gradientUnits="userSpaceOnUse">
                         <stop offset="0" stopColor="#d4af37" />
                         <stop offset="0.55" stopColor="#eabf47" />
                         <stop offset="1" stopColor="#ffd38e" />
                     </linearGradient>
-                    <linearGradient id="nav-linear-gradient-2" x1="500" y1="59.79" x2="500" y2="791.77" gradientTransform="matrix(1, 0, 0, -1, 0, 791.77)" gradientUnits="userSpaceOnUse">
+                    <linearGradient id={`nav-linear-gradient-2-${idSuffix}`} x1="500" y1="59.79" x2="500" y2="791.77" gradientTransform="matrix(1, 0, 0, -1, 0, 791.77)" gradientUnits="userSpaceOnUse">
                         <stop offset="0" stopColor="#d4af37" />
                         <stop offset="0.29" stopColor="#eabf47" />
                         <stop offset="1" stopColor="#ffd38e" />
                     </linearGradient>
-                    <linearGradient id="nav-linear-gradient-3" x1="193.18" y1="-67.77" x2="193.18" y2="505.3" xlinkHref="#nav-linear-gradient" />
+                    <linearGradient id={`nav-linear-gradient-3-${idSuffix}`} x1="193.18" y1="-67.77" x2="193.18" y2="505.3" xlinkHref={`#nav-linear-gradient-${idSuffix}`} />
                 </defs>
-                <g id="Logo_Nav">
-                    <path d="M967.79,598.33c-18.94,56.63-39.65,95.76-54.48,119.34-31.18,49.6-61.18,97.32-117.86,123.59-76.9,35.64-155.66,9.9-181.82,0a316.93,316.93,0,0,0,90.91-22.73c132.81-55.35,184.33-186,196.41-220.2,10.27-29.09,22.46-74.78,22.3-133.66a642.06,642.06,0,0,1-59.61,45.84V424.44a601.67,601.67,0,0,0,126.43-138C1000.63,346,1013,463.3,967.79,598.33Z" style={{ fill: "url(#nav-linear-gradient)" }} />
-                    <path d="M767.32,642.89a500.18,500.18,0,0,1-59.75-55.37,627.5,627.5,0,0,0,82-33.75c9.91-4.91,19.43-10,28.59-15.11V457.25A584.07,584.07,0,0,1,767.32,487a595.12,595.12,0,0,1-105.68,42.48C605.16,446.77,566.82,331,566.82,331,525,204.57,507.7,84.18,500,0c-7.7,84.18-25,204.57-66.82,331,0,0-38.34,115.75-94.82,198.41A594.36,594.36,0,0,1,232.68,487a581.54,581.54,0,0,1-50.86-29.7v81.41q13.74,7.71,28.59,15.12a628.89,628.89,0,0,0,82,33.75,500.09,500.09,0,0,1-59.75,55.36,515.83,515.83,0,0,1-66.82,44.55L210.41,732A716.15,716.15,0,0,0,350.5,603.77a672.71,672.71,0,0,0,299,0A715.79,715.79,0,0,0,789.59,732l44.55-44.54A515.76,515.76,0,0,1,767.32,642.89ZM500,553.77a597.66,597.66,0,0,1-104.39-10.52c22.39-35.11,43.5-82,82.12-167.68a301.5,301.5,0,0,0,10.8-29c5.47-17.06,11-39.36,11.47-60.16.45,20.8,6,43.1,11.48,60.16a298.85,298.85,0,0,0,10.8,29c38.61,85.7,59.72,132.57,82.11,167.68A597.66,597.66,0,0,1,500,553.77Z" style={{ fill: "url(#nav-linear-gradient-2)" }} />
-                    <path d="M32.21,598.33C51.15,655,71.86,694.09,86.69,717.67c31.18,49.6,61.18,97.32,117.86,123.59,76.9,35.64,155.66,9.9,181.82,0a316.93,316.93,0,0,1-90.91-22.73c-132.81-55.35-184.33-186-196.41-220.2a396.48,396.48,0,0,1-22.3-133.66,642.2,642.2,0,0,0,59.62,45.84V424.44a601.49,601.49,0,0,1-126.44-138C-.63,346-12.95,463.3,32.21,598.33Z" style={{ fill: "url(#nav-linear-gradient-3)" }} />
+                <g id={`Logo_Nav_${idSuffix}`}>
+                    <path d="M967.79,598.33c-18.94,56.63-39.65,95.76-54.48,119.34-31.18,49.6-61.18,97.32-117.86,123.59-76.9,35.64-155.66,9.9-181.82,0a316.93,316.93,0,0,0,90.91-22.73c132.81-55.35,184.33-186,196.41-220.2,10.27-29.09,22.46-74.78,22.3-133.66a642.06,642.06,0,0,1-59.61,45.84V424.44a601.67,601.67,0,0,0,126.43-138C1000.63,346,1013,463.3,967.79,598.33Z" style={{ fill: `url(#nav-linear-gradient-${idSuffix})` }} />
+                    <path d="M767.32,642.89a500.18,500.18,0,0,1-59.75-55.37,627.5,627.5,0,0,0,82-33.75c9.91-4.91,19.43-10,28.59-15.11V457.25A584.07,584.07,0,0,1,767.32,487a595.12,595.12,0,0,1-105.68,42.48C605.16,446.77,566.82,331,566.82,331,525,204.57,507.7,84.18,500,0c-7.7,84.18-25,204.57-66.82,331,0,0-38.34,115.75-94.82,198.41A594.36,594.36,0,0,1,232.68,487a581.54,581.54,0,0,1-50.86-29.7v81.41q13.74,7.71,28.59,15.12a628.89,628.89,0,0,0,82,33.75,500.09,500.09,0,0,1-59.75,55.36,515.83,515.83,0,0,1-66.82,44.55L210.41,732A716.15,716.15,0,0,0,350.5,603.77a672.71,672.71,0,0,0,299,0A715.79,715.79,0,0,0,789.59,732l44.55-44.54A515.76,515.76,0,0,1,767.32,642.89ZM500,553.77a597.66,597.66,0,0,1-104.39-10.52c22.39-35.11,43.5-82,82.12-167.68a301.5,301.5,0,0,0,10.8-29c5.47-17.06,11-39.36,11.47-60.16.45,20.8,6,43.1,11.48,60.16a298.85,298.85,0,0,0,10.8,29c38.61,85.7,59.72,132.57,82.11,167.68A597.66,597.66,0,0,1,500,553.77Z" style={{ fill: `url(#nav-linear-gradient-2-${idSuffix})` }} />
+                    <path d="M32.21,598.33C51.15,655,71.86,694.09,86.69,717.67c31.18,49.6,61.18,97.32,117.86,123.59,76.9,35.64,155.66,9.9,181.82,0a316.93,316.93,0,0,1-90.91-22.73c-132.81-55.35-184.33-186-196.41-220.2a396.48,396.48,0,0,1-22.3-133.66,642.2,642.2,0,0,0,59.62,45.84V424.44a601.49,601.49,0,0,1-126.44-138C-.63,346-12.95,463.3,32.21,598.33Z" style={{ fill: `url(#nav-linear-gradient-3-${idSuffix})` }} />
                 </g>
             </svg>
         </motion.div>
@@ -244,7 +244,7 @@ export default function NavBar() {
                         onMouseLeave={() => setIsLogoHovered(false)}
                         onClick={() => window.location.href = "/"}
                     >
-                        {logoSvg("w-5 h-5 md:w-6 md:h-6")}
+                        {logoSvg("w-5 h-5 md:w-6 md:h-6", "desktop")}
                     </NavCapsule>
 
                     {/* [MENU | RESERVATION] Links Capsule — disappears on scroll */}
@@ -362,12 +362,14 @@ export default function NavBar() {
 
                     {/* Row 2: Logo + Status + Language — always visible */}
                     <motion.div
+                        layout
                         transition={harmonyTransition}
-                        className="flex justify-center gap-0 w-full"
+                        className="flex justify-center w-full gap-0"
                         style={{ transform: 'translateZ(0)', WebkitBackfaceVisibility: 'hidden', backfaceVisibility: 'hidden', position: 'relative', zIndex: 10 }}
                     >
                         {/* Logo */}
                         <NavCapsule
+                            layout
                             className={`w-14 h-12 cursor-pointer transition-colors duration-300 ${isLightSection ? "hover:bg-charcoal/5" : "hover:bg-white/10"}`}
                             glowSize={70}
                             textColor={textColor}
@@ -377,12 +379,13 @@ export default function NavBar() {
                             onMouseLeave={() => setIsLogoHovered(false)}
                             onClick={() => window.location.href = "/"}
                         >
-                            {logoSvg("w-5 h-5")}
+                            {logoSvg("w-5 h-5", "mobile")}
                         </NavCapsule>
 
                         {/* Status */}
                         <NavCapsule
-                            className="flex-1 h-12 whitespace-nowrap -ml-[1px]"
+                            layout
+                            className={`h-12 whitespace-nowrap -ml-[1px] transition-all duration-500 ease-[0.33,1,0.68,1] overflow-hidden ${isScrolled ? "w-auto px-6" : "flex-1"}`}
                             textColor={statusTextColor}
                             backdropClass={backdropClass}
                             borderColor={borderColor}
@@ -396,6 +399,7 @@ export default function NavBar() {
 
                         {/* Language */}
                         <NavCapsule
+                            layout
                             className={`w-14 h-12 cursor-pointer transition-colors duration-300 group -ml-[1px] ${isLightSection ? "hover:bg-charcoal/5" : "hover:bg-white/10"}`}
                             textColor={textColor}
                             backdropClass={backdropClass}

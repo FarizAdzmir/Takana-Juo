@@ -34,9 +34,16 @@ export const metadata: Metadata = {
         "Nasi Goreng Minang",
     openGraph: {
         title: "Takana Juo",
-        description:
-            "Nasi Goreng Minang",
+        description: "Nasi Goreng Minang",
         type: "website",
+        images: [
+            {
+                url: "/OG.jpg",
+                width: 1200,
+                height: 630,
+                alt: "Takana Juo – Nasi Goreng Minang",
+            },
+        ],
     },
 };
 

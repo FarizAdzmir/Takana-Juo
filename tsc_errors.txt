@@ -1,1 +1,0 @@
-﻿src/components/Home/Menu.tsx(7,20): error TS2614: Module '"@/components/UI/MenuCard"' has no exported member 'MenuCategoryData'. Did you mean to use 'import MenuCategoryData from "@/components/UI/MenuCard"' instead?

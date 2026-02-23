@@ -1,388 +1,382 @@
 "use client";
 
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect } from "react";
+import { supabase } from "@/lib/supabase";
+import { RevealText } from "@/components/UI/Reveal";
+import AnimatedLogin from "./AnimatedLogin";
+import { Input } from "@/components/UI/Input";
+import { Label } from "@/components/UI/Label";
+import { Button } from "@/components/UI/Button";
+import { X, Edit2 } from "lucide-react";
 
-interface RestaurantStatus {
-    isOpen: boolean;
-    reason: string;
-    details: {
-        manualOverride: "open" | "closed" | null;
-        overrideTimestamp: string | null;
-        isRamadan: boolean;
-        withinBusinessHours: boolean;
-    };
-}
+/* Mini Custom Logo ensuring perfect text alignment */
+const AdminMiniLogo = () => (
+    <svg viewBox="0 0 1000 859.54" className="w-9 h-9 drop-shadow-sm filter brightness-150 shrink-0">
+        <defs>
+            <linearGradient id={`admin-mini-gradient`} x1="806.82" y1="-67.77" x2="806.82" y2="505.3" gradientTransform="matrix(1, 0, 0, -1, 0, 791.77)" gradientUnits="userSpaceOnUse">
+                <stop offset="0" stopColor="#d4af37" />
+                <stop offset="0.55" stopColor="#eabf47" />
+                <stop offset="1" stopColor="#ffd38e" />
+            </linearGradient>
+            <linearGradient id={`admin-mini-gradient-2`} x1="500" y1="59.79" x2="500" y2="791.77" gradientTransform="matrix(1, 0, 0, -1, 0, 791.77)" gradientUnits="userSpaceOnUse">
+                <stop offset="0" stopColor="#d4af37" />
+                <stop offset="0.29" stopColor="#eabf47" />
+                <stop offset="1" stopColor="#ffd38e" />
+            </linearGradient>
+            <linearGradient id={`admin-mini-gradient-3`} x1="193.18" y1="-67.77" x2="193.18" y2="505.3" xlinkHref={`#admin-mini-gradient`} />
+        </defs>
+        <g>
+            <path d="M967.79,598.33c-18.94,56.63-39.65,95.76-54.48,119.34-31.18,49.6-61.18,97.32-117.86,123.59-76.9,35.64-155.66,9.9-181.82,0a316.93,316.93,0,0,0,90.91-22.73c132.81-55.35,184.33-186,196.41-220.2,10.27-29.09,22.46-74.78,22.3-133.66a642.06,642.06,0,0,1-59.61,45.84V424.44a601.67,601.67,0,0,0,126.43-138C1000.63,346,1013,463.3,967.79,598.33Z" style={{ fill: `url(#admin-mini-gradient)` }} />
+            <path d="M767.32,642.89a500.18,500.18,0,0,1-59.75-55.37,627.5,627.5,0,0,0,82-33.75c9.91-4.91,19.43-10,28.59-15.11V457.25A584.07,584.07,0,0,1,767.32,487a595.12,595.12,0,0,1-105.68,42.48C605.16,446.77,566.82,331,566.82,331,525,204.57,507.7,84.18,500,0c-7.7,84.18-25,204.57-66.82,331,0,0-38.34,115.75-94.82,198.41A594.36,594.36,0,0,1,232.68,487a581.54,581.54,0,0,1-50.86-29.7v81.41q13.74,7.71,28.59,15.12a628.89,628.89,0,0,0,82,33.75,500.09,500.09,0,0,1-59.75,55.36,515.83,515.83,0,0,1-66.82,44.55L210.41,732A716.15,716.15,0,0,0,350.5,603.77a672.71,672.71,0,0,0,299,0A715.79,715.79,0,0,0,789.59,732l44.55-44.54A515.76,515.76,0,0,1,767.32,642.89ZM500,553.77a597.66,597.66,0,0,1-104.39-10.52c22.39-35.11,43.5-82,82.12-167.68a301.5,301.5,0,0,0,10.8-29c5.47-17.06,11-39.36,11.47-60.16.45,20.8,6,43.1,11.48,60.16a298.85,298.85,0,0,0,10.8,29c38.61,85.7,59.72,132.57,82.11,167.68A597.66,597.66,0,0,1,500,553.77Z" style={{ fill: `url(#admin-mini-gradient-2)` }} />
+            <path d="M32.21,598.33C51.15,655,71.86,694.09,86.69,717.67c31.18,49.6,61.18,97.32,117.86,123.59,76.9,35.64,155.66,9.9,181.82,0a316.93,316.93,0,0,1-90.91-22.73c-132.81-55.35-184.33-186-196.41-220.2a396.48,396.48,0,0,1-22.3-133.66,642.2,642.2,0,0,0,59.62,45.84V424.44a601.49,601.49,0,0,1-126.44-138C-.63,346-12.95,463.3,32.21,598.33Z" style={{ fill: `url(#admin-mini-gradient-3)` }} />
+        </g>
+    </svg>
+)
 
-export default function DashboardPage() {
-    const [isLoggedIn, setIsLoggedIn] = useState(false);
-    const [isCheckingAuth, setIsCheckingAuth] = useState(true);
-    const [username, setUsername] = useState("");
+export default function AdminPage() {
+    const [session, setSession] = useState<any>(null);
+    const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-    const [loginError, setLoginError] = useState("");
-    const [status, setStatus] = useState<RestaurantStatus | null>(null);
-    const [isUpdating, setIsUpdating] = useState(false);
+    const [loadingAuth, setLoadingAuth] = useState(false);
+    const [errorMsg, setErrorMsg] = useState("");
 
-    // Check auth on mount
+    const [menuItems, setMenuItems] = useState<any[]>([]);
+    const [loadingData, setLoadingData] = useState(true);
+
+    const [storeStatus, setStoreStatus] = useState<any>(null);
+    const [loadingStatus, setLoadingStatus] = useState(true);
+
+    // Edit Modal State
+    const [editingItem, setEditingItem] = useState<any>(null);
+    const [editForm, setEditForm] = useState({ main: "", sub: "", price: "", image: "" });
+    const [isSaving, setIsSaving] = useState(false);
+
+    // Check active session on mount
     useEffect(() => {
-        fetch("/api/auth")
-            .then((res) => res.json())
-            .then((data) => {
-                setIsLoggedIn(data.authenticated);
-                setIsCheckingAuth(false);
-            })
-            .catch(() => setIsCheckingAuth(false));
+        supabase.auth.getSession().then(({ data: { session } }) => {
+            setSession(session);
+        });
+
+        const {
+            data: { subscription },
+        } = supabase.auth.onAuthStateChange((_event, session) => {
+            setSession(session);
+        });
+
+        return () => subscription.unsubscribe();
     }, []);
 
-    // Fetch status when logged in
-    const fetchStatus = useCallback(async () => {
-        try {
-            const res = await fetch("/api/status");
-            const data = await res.json();
-            setStatus(data);
-        } catch (err) {
-            console.error("Failed to fetch status:", err);
-        }
-    }, []);
-
+    // Fetch live prices and status if logged in
     useEffect(() => {
-        if (isLoggedIn) {
-            fetchStatus();
-            const interval = setInterval(fetchStatus, 30_000);
-            return () => clearInterval(interval);
-        }
-    }, [isLoggedIn, fetchStatus]);
+        if (!session) return;
+        const fetchData = async () => {
+            setLoadingData(true);
 
-    // Login handler
+            // 1. Fetch Menu Items
+            const { data: menuData, error: menuError } = await supabase
+                .from("menu_items")
+                .select("*")
+                .order("id");
+            if (menuError) console.error(menuError);
+            else setMenuItems(menuData || []);
+
+            // 2. Fetch Store Status
+            try {
+                const res = await fetch("/api/status", { cache: "no-store" });
+                const statusData = await res.json();
+                setStoreStatus(statusData);
+            } catch (e) {
+                console.error("Failed to fetch status", e);
+            }
+
+            setLoadingData(false);
+            setLoadingStatus(false);
+        };
+        fetchData();
+    }, [session]);
+
     const handleLogin = async (e: React.FormEvent) => {
         e.preventDefault();
-        setLoginError("");
-
-        try {
-            const res = await fetch("/api/auth", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ username, password }),
-            });
-
-            if (res.ok) {
-                setIsLoggedIn(true);
-                setUsername("");
-                setPassword("");
-            } else {
-                setLoginError("Invalid username or password");
-            }
-        } catch {
-            setLoginError("Connection error. Please try again.");
-        }
+        setErrorMsg("");
+        setLoadingAuth(true);
+        const { error } = await supabase.auth.signInWithPassword({ email, password });
+        if (error) setErrorMsg(error.message);
+        setLoadingAuth(false);
     };
 
-    // Logout handler
     const handleLogout = async () => {
-        await fetch("/api/auth", { method: "DELETE" });
-        setIsLoggedIn(false);
-        setStatus(null);
+        await supabase.auth.signOut();
     };
 
-    // Override handler
-    const handleOverride = async (
-        override: "open" | "closed" | null
-    ) => {
-        setIsUpdating(true);
-        try {
-            const res = await fetch("/api/status", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ override }),
-            });
-            if (res.ok) {
-                const data = await res.json();
-                setStatus(data);
-            }
-        } catch (err) {
-            console.error("Failed to update status:", err);
+    const openEditModal = (item: any) => {
+        setEditingItem(item);
+        setEditForm({ main: item.main, sub: item.sub, price: item.price, image: item.image || "" });
+    };
+
+    const closeEditModal = () => {
+        setEditingItem(null);
+    };
+
+    const saveEditItem = async (e: React.FormEvent) => {
+        e.preventDefault();
+        if (!editingItem) return;
+        setIsSaving(true);
+
+        const { error } = await supabase
+            .from("menu_items")
+            .update({
+                main: editForm.main,
+                sub: editForm.sub,
+                price: editForm.price,
+                image: editForm.image
+            })
+            .eq("id", editingItem.id);
+
+        if (error) {
+            alert("Failed to update item.");
+            console.error(error);
+        } else {
+            setMenuItems((prev) =>
+                prev.map((item) => (item.id === editingItem.id ? { ...item, ...editForm } : item))
+            );
+            closeEditModal();
         }
-        setIsUpdating(false);
+        setIsSaving(false);
     };
 
-    // Loading state
-    if (isCheckingAuth) {
+    const updateStoreStatus = async (override: "open" | "closed" | "auto") => {
+        setLoadingStatus(true);
+        try {
+            const emergency_closed = override === "closed";
+            const force_open = override === "open";
+
+            const { error: updateError } = await supabase
+                .from("store_settings")
+                .update({
+                    emergency_closed,
+                    force_open,
+                    updated_at: new Date().toISOString()
+                })
+                .eq("id", 1);
+
+            if (updateError) throw new Error(updateError.message);
+
+            // Fetch newly calculated status to update the UI
+            const res = await fetch("/api/status", { cache: "no-store" });
+            const newStatus = await res.json();
+            setStoreStatus(newStatus);
+        } catch (e: any) {
+            console.error("Failed to update store status", e);
+            alert("Failed to update store status: " + e.message);
+        }
+        setLoadingStatus(false);
+    };
+
+    if (!session) {
         return (
-            <div className="min-h-screen bg-charcoal flex items-center justify-center">
-                <div className="text-gold-dark animate-pulse font-heading text-2xl">
-                    Loading...
-                </div>
-            </div>
+            <AnimatedLogin
+                emailState={[email, setEmail]}
+                passwordState={[password, setPassword]}
+                loadingAuth={loadingAuth}
+                onLogin={handleLogin}
+                errorMsg={errorMsg}
+            />
         );
     }
 
-    // Login form
-    if (!isLoggedIn) {
-        return (
-            <div className="min-h-screen bg-charcoal flex items-center justify-center px-6">
-                <div className="w-full max-w-sm">
-                    {/* Logo / Title */}
-                    <div className="text-center mb-12 flex flex-col items-center">
-                        <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            viewBox="0 0 1000 375.385"
-                            className="h-10 w-auto fill-gold mb-3"
-                        >
-                            <path d="M521.8,472.515A542.6,542.6,0,0,1,501.149,383c-.39-2.176-.78-4.331-1.149-6.507-.369,2.176-.759,4.331-1.149,6.507a542.6,542.6,0,0,1-20.65,89.515c-25.473,78.842-68.578,150.643-128.166,213.433l-1.663,1.724L500,687.59l151.628.082-1.663-1.724C590.377,623.158,547.272,551.357,521.8,472.515Z" transform="translate(0 -312.308)" />
-                            <path d="M756.579,583.357l.287-.2.082-.349c7-25.678,13.342-51.911,18.884-77.959,8.847-41.566,15.908-84.034,20.978-126.216l.411-3.366-2.2,2.566a355.663,355.663,0,0,1-116.363,89.186,350.791,350.791,0,0,1-120.531,32.74l-1.375.123.513,1.272a513.052,513.052,0,0,0,79.109,135.146l.41.492.616-.143a314.574,314.574,0,0,0,119.176-53.287Z" transform="translate(0 -312.308)" />
-                            <path d="M1000,312.308l-3.079,4.084A393.106,393.106,0,0,1,816.413,450.2l-.575.206q-12.562,74.971-25.1,149.944a354.473,354.473,0,0,1-141.61,46.841l-1.95.226,34.3,39.9.308.369,223.035-.055Z" transform="translate(0 -312.308)" />
-                            <path d="M224.168,504.844c5.542,26.048,11.884,52.281,18.884,77.959l.082.349.287.2A314.574,314.574,0,0,0,362.6,636.644l.616.143.41-.492a513.919,513.919,0,0,0,48.3-70.713,511,511,0,0,0,30.81-64.433l.513-1.272-1.375-.123a350.791,350.791,0,0,1-120.531-32.74,355.663,355.663,0,0,1-116.363-89.186l-2.2-2.566.411,3.366C208.26,420.81,215.321,463.278,224.168,504.844Z" transform="translate(0 -312.308)" />
-                            <path d="M352.826,647.42l-1.95-.226a354.473,354.473,0,0,1-141.61-46.841q-12.562-74.971-25.1-149.944l-.575-.206A393.106,393.106,0,0,1,3.079,316.392L0,312.308,95.184,687.637l223.035.055.308-.369Z" transform="translate(0 -312.308)" />
-                        </svg>
-                        <p className="text-cream/40 text-xs uppercase tracking-[0.3em]">
-                            Admin Panel
-                        </p>
-                    </div>
-
-                    <form onSubmit={handleLogin} className="space-y-6">
-                        <div>
-                            <label className="block text-cream/50 text-xs uppercase tracking-[0.2em] mb-2">
-                                Username
-                            </label>
-                            <input
-                                type="text"
-                                value={username}
-                                onChange={(e) => setUsername(e.target.value)}
-                                className="w-full bg-charcoal-light/50 border border-cream/10 text-cream px-4 py-3 text-sm focus:border-gold focus:outline-none transition-colors duration-300"
-                                required
-                                autoComplete="username"
-                            />
-                        </div>
-                        <div>
-                            <label className="block text-cream/50 text-xs uppercase tracking-[0.2em] mb-2">
-                                Password
-                            </label>
-                            <input
-                                type="password"
-                                value={password}
-                                onChange={(e) => setPassword(e.target.value)}
-                                className="w-full bg-charcoal-light/50 border border-cream/10 text-cream px-4 py-3 text-sm focus:border-gold focus:outline-none transition-colors duration-300"
-                                required
-                                autoComplete="current-password"
-                            />
-                        </div>
-
-                        {loginError && (
-                            <p className="text-red-400 text-xs text-center">
-                                {loginError}
-                            </p>
-                        )}
-
-                        <button
-                            type="submit"
-                            className="w-full py-3 bg-gold text-charcoal font-heading text-sm uppercase tracking-[0.2em] hover:bg-gold-light transition-colors duration-300"
-                        >
-                            Sign In
-                        </button>
-                    </form>
-
-                    <div className="mt-8 text-center">
-                        <a
-                            href="/"
-                            className="text-cream/30 text-xs uppercase tracking-[0.2em] hover:text-gold-dark transition-colors duration-300"
-                        >
-                            ← Back to Website
-                        </a>
-                    </div>
-                </div>
-            </div>
-        );
-    }
-
-    // Dashboard
     return (
-        <div className="min-h-screen bg-charcoal">
-            {/* Header */}
-            <header className="border-b border-cream/10 px-6 md:px-12 py-5 flex items-center justify-between">
-                <div className="flex items-center gap-3">
-                    <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        viewBox="0 0 1000 375.385"
-                        className="h-7 w-auto fill-gold"
-                    >
-                        <path d="M521.8,472.515A542.6,542.6,0,0,1,501.149,383c-.39-2.176-.78-4.331-1.149-6.507-.369,2.176-.759,4.331-1.149,6.507a542.6,542.6,0,0,1-20.65,89.515c-25.473,78.842-68.578,150.643-128.166,213.433l-1.663,1.724L500,687.59l151.628.082-1.663-1.724C590.377,623.158,547.272,551.357,521.8,472.515Z" transform="translate(0 -312.308)" />
-                        <path d="M756.579,583.357l.287-.2.082-.349c7-25.678,13.342-51.911,18.884-77.959,8.847-41.566,15.908-84.034,20.978-126.216l.411-3.366-2.2,2.566a355.663,355.663,0,0,1-116.363,89.186,350.791,350.791,0,0,1-120.531,32.74l-1.375.123.513,1.272a513.052,513.052,0,0,0,79.109,135.146l.41.492.616-.143a314.574,314.574,0,0,0,119.176-53.287Z" transform="translate(0 -312.308)" />
-                        <path d="M1000,312.308l-3.079,4.084A393.106,393.106,0,0,1,816.413,450.2l-.575.206q-12.562,74.971-25.1,149.944a354.473,354.473,0,0,1-141.61,46.841l-1.95.226,34.3,39.9.308.369,223.035-.055Z" transform="translate(0 -312.308)" />
-                        <path d="M224.168,504.844c5.542,26.048,11.884,52.281,18.884,77.959l.082.349.287.2A314.574,314.574,0,0,0,362.6,636.644l.616.143.41-.492a513.919,513.919,0,0,0,48.3-70.713,511,511,0,0,0,30.81-64.433l.513-1.272-1.375-.123a350.791,350.791,0,0,1-120.531-32.74,355.663,355.663,0,0,1-116.363-89.186l-2.2-2.566.411,3.366C208.26,420.81,215.321,463.278,224.168,504.844Z" transform="translate(0 -312.308)" />
-                        <path d="M352.826,647.42l-1.95-.226a354.473,354.473,0,0,1-141.61-46.841q-12.562-74.971-25.1-149.944l-.575-.206A393.106,393.106,0,0,1,3.079,316.392L0,312.308,95.184,687.637l223.035.055.308-.369Z" transform="translate(0 -312.308)" />
-                    </svg>
-                    <p className="text-cream/40 text-[10px] uppercase tracking-[0.3em]">
-                        Dashboard
-                    </p>
-                </div>
-                <div className="flex items-center gap-4">
-                    <a
-                        href="/"
-                        className="text-cream/40 text-xs uppercase tracking-[0.15em] hover:text-gold-dark transition-colors duration-300"
-                    >
-                        View Site
-                    </a>
+        <div className="min-h-screen bg-black text-white pb-20 admin-root overflow-x-hidden">
+            <style>{`
+                .admin-root, .admin-root * {
+                    font-family: 'Inter', system-ui, -apple-system, sans-serif !important;
+                    border-radius: 0 !important;
+                }
+                .status-dot {
+                    border-radius: 9999px !important;
+                }
+            `}</style>
+            {/* Minimal Top-Left Navigation Header (Glass) */}
+            <div className="flex items-center gap-3.5 px-8 py-5 border-b border-white/10 bg-white/5 backdrop-blur-md relative z-50">
+                <AdminMiniLogo />
+                <h1 className="text-xl font-medium tracking-wide" style={{ transform: "translateY(2px)" }}>Dashboard</h1>
+                <div className="ml-auto">
                     <button
                         onClick={handleLogout}
-                        className="text-cream/40 text-xs uppercase tracking-[0.15em] hover:text-red-400 transition-colors duration-300"
+                        className="text-sm font-medium text-white/50 hover:text-white transition-colors border border-white/10 hover:border-white/20 px-3 py-1.5"
                     >
                         Logout
                     </button>
                 </div>
-            </header>
+            </div>
 
-            <main className="max-w-4xl mx-auto px-6 md:px-12 py-12">
-                {/* Current Status Card */}
-                <div className="border border-cream/10 p-8 mb-8">
-                    <div className="flex items-center justify-between mb-6">
-                        <h2 className="font-heading text-cream text-lg uppercase tracking-[0.15em]">
-                            Restaurant Status
-                        </h2>
-                        <div className="flex items-center gap-2">
-                            <span
-                                className={`inline-block w-3 h-3 rounded-full ${status?.isOpen
-                                    ? "bg-green-500 animate-pulse"
-                                    : "bg-red-400"
-                                    }`}
-                            />
-                            <span
-                                className={`font-heading text-2xl uppercase tracking-[0.1em] ${status?.isOpen
-                                    ? "text-green-500"
-                                    : "text-red-400"
-                                    }`}
-                            >
-                                {status?.isOpen ? "Open" : "Closed"}
-                            </span>
-                        </div>
-                    </div>
+            <div className="max-w-4xl mx-auto mt-12 px-6 space-y-12">
+                {loadingData ? (
+                    <div className="text-center py-20 text-white/50 animate-pulse">Loading dashboard elements...</div>
+                ) : (
+                    <>
+                        {/* Status Management Panel (Vertical Stack, Glass) */}
+                        <div className="bg-white/5 backdrop-blur-md border border-white/10 p-10 flex flex-col justify-center items-center text-center">
+                            <h2 className="text-xs font-bold uppercase tracking-widest text-white/50 mb-6">Store Operating Status</h2>
 
-                    <p className="text-cream/50 text-sm mb-8">
-                        {status?.reason || "Loading..."}
-                    </p>
+                            {loadingStatus || !storeStatus ? (
+                                <div className="text-white/50 text-sm animate-pulse mb-8">Calculating status...</div>
+                            ) : (
+                                <div className="mb-10">
+                                    <div className="flex items-center justify-center gap-3 mb-2">
+                                        <div className={`w-3 h-3 status-dot ${storeStatus.isOpen ? 'bg-green-500 animate-pulse' : 'bg-red-500'}`} />
+                                        <span className={`text-4xl font-bold tracking-tight ${storeStatus.isOpen ? 'text-green-500' : 'text-red-500'}`}>
+                                            {storeStatus.isOpen ? 'OPEN' : 'CLOSED'}
+                                        </span>
+                                    </div>
+                                    <p className="text-white/40 text-sm mt-2">{storeStatus.reason}</p>
+                                </div>
+                            )}
 
-                    {/* Override Controls */}
-                    <div className="space-y-4">
-                        <p className="text-cream/40 text-xs uppercase tracking-[0.2em]">
-                            Manual Override
-                        </p>
-                        <div className="flex flex-wrap gap-3">
-                            <button
-                                onClick={() => handleOverride("open")}
-                                disabled={isUpdating}
-                                className={`px-6 py-2.5 text-xs uppercase tracking-[0.15em] font-heading transition-all duration-300 border ${status?.details.manualOverride === "open"
-                                    ? "bg-green-500/20 border-green-500 text-green-400"
-                                    : "border-cream/20 text-cream/50 hover:border-green-500 hover:text-green-400"
-                                    } disabled:opacity-50`}
-                            >
-                                Force Open
-                            </button>
-                            <button
-                                onClick={() => handleOverride(null)}
-                                disabled={isUpdating}
-                                className={`px-6 py-2.5 text-xs uppercase tracking-[0.15em] font-heading transition-all duration-300 border ${status?.details.manualOverride === null
-                                    ? "bg-gold-dark/20 border-gold-dark text-gold-dark"
-                                    : "border-cream/20 text-cream/50 hover:border-gold-dark hover:text-gold-dark"
-                                    } disabled:opacity-50`}
-                            >
-                                Auto
-                            </button>
-                            <button
-                                onClick={() => handleOverride("closed")}
-                                disabled={isUpdating}
-                                className={`px-6 py-2.5 text-xs uppercase tracking-[0.15em] font-heading transition-all duration-300 border ${status?.details.manualOverride === "closed"
-                                    ? "bg-red-500/20 border-red-500 text-red-400"
-                                    : "border-cream/20 text-cream/50 hover:border-red-500 hover:text-red-400"
-                                    } disabled:opacity-50`}
-                            >
-                                Force Closed
-                            </button>
-                        </div>
-                    </div>
-                </div>
-
-                {/* Info Cards */}
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    {/* Business Hours */}
-                    <div className="border border-cream/10 p-6">
-                        <h3 className="font-heading text-cream text-sm uppercase tracking-[0.15em] mb-4">
-                            Business Hours
-                        </h3>
-                        <div className="space-y-2">
-                            <div className="flex justify-between text-sm">
-                                <span className="text-cream/50">
-                                    Monday – Friday
-                                </span>
-                                <span className="text-cream/80">
-                                    10:00 AM – 5:00 PM
-                                </span>
-                            </div>
-                            <div className="flex justify-between text-sm">
-                                <span className="text-cream/50">
-                                    Saturday – Sunday
-                                </span>
-                                <span className="text-red-400/70">Closed</span>
+                            <div className="flex w-full max-w-md bg-black/40 p-1.5 border border-white/10 gap-1.5">
+                                <button
+                                    onClick={() => updateStoreStatus("open")}
+                                    disabled={loadingStatus}
+                                    className={`flex-1 px-4 py-3 text-sm font-medium transition-all ${storeStatus?.details?.manualOverride === "open" ? "bg-green-500/20 text-green-400 border border-green-500/30" : "text-white/50 hover:text-white hover:bg-white/5 border border-transparent"}`}
+                                >
+                                    Force Open
+                                </button>
+                                <button
+                                    onClick={() => updateStoreStatus("auto")}
+                                    disabled={loadingStatus}
+                                    className={`flex-1 px-4 py-3 text-sm font-medium transition-all ${storeStatus?.details?.manualOverride === null ? "bg-white/10 text-white border border-white/20" : "text-white/50 hover:text-white hover:bg-white/5 border border-transparent"}`}
+                                >
+                                    Auto
+                                </button>
+                                <button
+                                    onClick={() => updateStoreStatus("closed")}
+                                    disabled={loadingStatus}
+                                    className={`flex-1 px-4 py-3 text-sm font-medium transition-all ${storeStatus?.details?.manualOverride === "closed" ? "bg-red-500/20 text-red-400 border border-red-500/30" : "text-white/50 hover:text-white hover:bg-white/5 border border-transparent"}`}
+                                >
+                                    Force Close
+                                </button>
                             </div>
                         </div>
-                        <div className="mt-4 pt-4 border-t border-cream/5">
-                            <div className="flex items-center gap-2">
-                                <span
-                                    className={`inline-block w-1.5 h-1.5 rounded-full ${status?.details.withinBusinessHours
-                                        ? "bg-green-500"
-                                        : "bg-red-400"
-                                        }`}
-                                />
-                                <span className="text-cream/40 text-xs">
-                                    Currently{" "}
-                                    {status?.details.withinBusinessHours
-                                        ? "within"
-                                        : "outside"}{" "}
-                                    business hours
-                                </span>
+
+                        {/* Menu Items (Traditional Table with Rows, Glass) */}
+                        <div className="bg-white/5 backdrop-blur-md border border-white/10 overflow-x-auto">
+                            <table className="w-full text-left border-collapse min-w-[600px]">
+                                <thead>
+                                    <tr className="border-b border-white/10 bg-black/40">
+                                        <th className="p-5 text-xs font-semibold uppercase tracking-wider text-white/50">Dish</th>
+                                        <th className="p-5 text-xs font-semibold uppercase tracking-wider text-white/50 w-32">Price</th>
+                                        <th className="p-5 text-xs font-semibold uppercase tracking-wider text-white/50 w-28 text-right">Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {menuItems.map((item) => (
+                                        <tr key={item.id} className="border-b border-white/5 hover:bg-white/[0.02] transition-colors group">
+                                            <td className="p-5">
+                                                <div className="flex items-center gap-4">
+                                                    <div className="w-14 h-14 bg-black/50 overflow-hidden flex-shrink-0 border border-white/5 p-1.5">
+                                                        {/* eslint-disable-next-line @next/next/no-img-element */}
+                                                        <img src={item.image} alt={item.sub} className="w-full h-full object-contain" />
+                                                    </div>
+                                                    <div>
+                                                        <div className="font-semibold text-lg leading-tight mb-1">{item.main}</div>
+                                                        {item.sub !== 'Biasa' && (
+                                                            <div className="text-sm text-white/40">{item.sub}</div>
+                                                        )}
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td className="p-5 text-lg font-medium tracking-wide">
+                                                {item.price}
+                                            </td>
+                                            <td className="p-5 text-right">
+                                                <button
+                                                    onClick={() => openEditModal(item)}
+                                                    className="bg-white/10 hover:bg-white text-white hover:text-black px-4 py-2 text-sm transition-all font-medium flex items-center justify-center gap-2 ml-auto"
+                                                >
+                                                    <Edit2 size={14} /> Edit
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    ))}
+                                </tbody>
+                            </table>
+                        </div>
+                    </>
+                )}
+            </div>
+
+            {/* Edit Modal Overlay */}
+            {editingItem && (
+                <div className="fixed inset-0 z-[6000] flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm">
+                    <div className="bg-[#111] border border-white/10 w-full max-w-md shadow-2xl animate-in zoom-in-95 duration-200">
+                        <div className="px-6 py-5 border-b border-white/10 flex justify-between items-center bg-black/50">
+                            <h3 className="text-lg font-medium tracking-wide">Edit Menu Item</h3>
+                            <button onClick={closeEditModal} className="text-white/50 hover:text-white transition-colors bg-white/5 hover:bg-white/10 p-2 border border-transparent">
+                                <X size={18} />
+                            </button>
+                        </div>
+                        <form onSubmit={saveEditItem} className="p-6 space-y-5">
+                            <div className="space-y-4">
+                                <div className="space-y-2">
+                                    <Label htmlFor="main" className="text-xs text-white/50 uppercase tracking-wider">Main Name</Label>
+                                    <Input
+                                        id="main"
+                                        value={editForm.main}
+                                        onChange={(e) => setEditForm(prev => ({ ...prev, main: e.target.value }))}
+                                        className="h-12 bg-black border-white/10 focus-visible:border-white/30 text-white"
+                                        required
+                                    />
+                                </div>
+                                <div className="space-y-2">
+                                    <Label htmlFor="sub" className="text-xs text-white/50 uppercase tracking-wider">Variation (Sub)</Label>
+                                    <Input
+                                        id="sub"
+                                        value={editForm.sub}
+                                        onChange={(e) => setEditForm(prev => ({ ...prev, sub: e.target.value }))}
+                                        className="h-12 bg-black border-white/10 focus-visible:border-white/30 text-white"
+                                    />
+                                </div>
+                                <div className="space-y-2">
+                                    <Label htmlFor="price" className="text-xs text-white/50 uppercase tracking-wider">Price</Label>
+                                    <Input
+                                        id="price"
+                                        value={editForm.price}
+                                        onChange={(e) => setEditForm(prev => ({ ...prev, price: e.target.value }))}
+                                        placeholder="e.g. RM 4.00"
+                                        className="h-12 bg-black border-white/10 focus-visible:border-white/30 text-white"
+                                        required
+                                    />
+                                </div>
+                                <div className="space-y-2">
+                                    <Label htmlFor="image" className="text-xs text-white/50 uppercase tracking-wider">Image URL</Label>
+                                    <Input
+                                        id="image"
+                                        value={editForm.image}
+                                        onChange={(e) => setEditForm(prev => ({ ...prev, image: e.target.value }))}
+                                        className="h-12 bg-black border-white/10 focus-visible:border-white/30 text-white"
+                                    />
+                                </div>
                             </div>
-                        </div>
-                    </div>
-
-                    {/* Ramadan Status */}
-                    <div className="border border-cream/10 p-6">
-                        <h3 className="font-heading text-cream text-sm uppercase tracking-[0.15em] mb-4">
-                            Ramadan Status
-                        </h3>
-                        <div className="flex items-center gap-3 mb-4">
-                            <span
-                                className={`inline-block w-2 h-2 rounded-full ${status?.details.isRamadan
-                                    ? "bg-amber-400 animate-pulse"
-                                    : "bg-cream/20"
-                                    }`}
-                            />
-                            <span
-                                className={`text-sm ${status?.details.isRamadan
-                                    ? "text-amber-400"
-                                    : "text-cream/50"
-                                    }`}
-                            >
-                                {status?.details.isRamadan
-                                    ? "It is currently Ramadan — restaurant auto-closes"
-                                    : "Not currently Ramadan"}
-                            </span>
-                        </div>
-                        <p className="text-cream/30 text-xs">
-                            Ramadan detection is automatic via Aladhan API
-                            (Kuala Lumpur, Malaysia timezone).
-                        </p>
+                            <div className="pt-4 flex gap-3">
+                                <Button
+                                    type="button"
+                                    variant="outline"
+                                    className="flex-1 h-12 border-white/10 text-white hover:bg-white/5"
+                                    onClick={closeEditModal}
+                                >
+                                    Cancel
+                                </Button>
+                                <Button
+                                    type="submit"
+                                    className="flex-1 h-12 bg-white text-black hover:bg-white/90 font-medium"
+                                    disabled={isSaving}
+                                >
+                                    {isSaving ? "Saving..." : "Save Changes"}
+                                </Button>
+                            </div>
+                        </form>
                     </div>
                 </div>
-
-                {/* Footer Note */}
-                <div className="mt-8 p-4 border border-cream/5 bg-cream/5">
-                    <p className="text-cream/30 text-xs leading-relaxed">
-                        <strong className="text-cream/50">Note:</strong> Manual
-                        override takes priority over all automatic rules.
-                        Setting to &quot;Auto&quot; returns control to the
-                        business hours and Ramadan schedule. Override state
-                        persists while the server is warm and resets to Auto on
-                        cold restart.
-                    </p>
-                </div>
-            </main>
+            )}
         </div>
     );
 }

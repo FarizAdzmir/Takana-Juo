@@ -32,9 +32,9 @@ export default function MenuCarousel({ item }: { item: MenuItem }) {
     };
 
     return (
-        <div className="flex-shrink-0 w-[280px] md:w-[230px] lg:w-[300px] xl:w-[320px] flex flex-col items-center group relative pb-8 mt-[130px] lg:mt-[150px]">
+        <div className="w-full max-w-[340px] px-4 md:px-0 flex flex-col items-center group relative pb-8 mt-[130px] lg:mt-[150px] cursor-pointer">
             {/* Card body */}
-            <div className="relative w-full h-full bg-gradient-to-b from-white to-[#EFEFEF] rounded-[40px] pt-[130px] lg:pt-[150px] pb-10 px-6 sm:px-10 shadow-[0_20px_40px_rgba(0,0,0,0.08)] hover:shadow-[0_40px_60px_rgba(0,0,0,0.12)] transition-shadow duration-300">
+            <div className="relative w-full h-full bg-gradient-to-b from-white to-[#EFEFEF] rounded-[40px] pt-[130px] lg:pt-[150px] pb-10 px-6 sm:px-10 shadow-[0_20px_40px_rgba(0,0,0,0.08)] hover:shadow-[0_40px_60px_rgba(0,0,0,0.12)] transition-all duration-300 active:scale-[0.98]">
 
                 {/* Plate image (Floating Much Higher, High Z-Index so it sits above edge fades) */}
                 <div className="absolute -top-[130px] lg:-top-[150px] left-1/2 -translate-x-1/2 w-[250px] h-[250px] md:w-[200px] md:h-[200px] lg:w-[270px] lg:h-[270px] xl:w-[290px] xl:h-[290px] group-hover:-translate-y-4 transition-transform duration-500 ease-out z-[50]">

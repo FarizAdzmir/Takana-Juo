@@ -40,11 +40,11 @@ export default function Footer() {
             <div className="fixed bottom-0 left-0 w-full h-[100dvh]">
                 <section className="w-full h-full bg-charcoal flex flex-col items-center justify-between overflow-x-hidden overflow-y-auto">
 
-                    <div className="w-full flex-grow flex flex-col items-center justify-center pt-8">
+                    <div className="w-full flex-grow flex flex-col items-center justify-center pt-24 lg:pt-8">
                         {/* Press Mention Section */}
                         <div className="w-full max-w-[1600px] px-6 lg:px-12 flex justify-center">
                             {/* Golden Bounding Box */}
-                            <div className="w-full border border-gold-dark py-10 md:py-20 px-6 text-center flex flex-col items-center justify-center gap-10">
+                            <div className="w-full border border-gold-dark py-10 lg:py-20 px-6 text-center flex flex-col items-center justify-center gap-6 lg:gap-10">
                                 <h2
                                     className="font-harbour text-3xl md:text-5xl lg:text-5xl uppercase max-w-5xl leading-tight md:leading-snug tracking-wider"
                                     style={{ WebkitTextStroke: '1px var(--color-gold-dark)', color: 'transparent' }}
@@ -128,14 +128,14 @@ export default function Footer() {
                                 </div>
 
                                 {/* Middle Col: Description & Contact */}
-                                <div className="flex flex-col lg:border-r border-cream/30">
+                                <div className="flex flex-col border-b lg:border-b-0 lg:border-r border-cream/30">
                                     {/* Description - top half */}
-                                    <div className="py-8 lg:py-12 px-8 font-mono text-sm max-w-lg mx-auto lg:mx-0 w-full uppercase tracking-[0.15em] leading-[1.8] opacity-80 min-h-[120px] lg:min-h-[160px] flex items-center">
+                                    <div className="py-8 lg:py-12 px-8 font-mono text-sm max-w-lg mx-auto lg:mx-0 w-full uppercase tracking-[0.15em] leading-[1.8] opacity-80 min-h-[120px] lg:min-h-[160px] flex justify-center lg:justify-start items-center text-center lg:text-left">
                                         {t('footer.description')}
                                     </div>
                                     {/* Horizontal Divider bounded inside column */}
                                     <div className="w-full border-t border-cream/30"></div>
-                                    <div className="py-8 px-8 font-mono text-sm uppercase tracking-[0.15em] opacity-80 flex lg:items-center">
+                                    <div className="py-8 px-8 font-mono text-sm uppercase tracking-[0.15em] opacity-80 flex lg:items-center justify-center lg:justify-start text-center lg:text-left">
                                         <span className="leading-loose">
                                             {t('footer.contactText').replace('+60 10-214 5431', '').trim()}
                                             <br />
@@ -174,7 +174,7 @@ export default function Footer() {
                         </div>
                     </div>
 
-                    <div className="w-full flex flex-col items-center pb-4 pt-6 lg:pt-8 text-gold-dark">
+                    <div className="w-full flex flex-col items-center pb-24 lg:pb-4 pt-6 lg:pt-8 text-gold-dark">
                         {/* Bottom Bar: Copyright */}
                         <div className="w-full max-w-[1600px] flex justify-center items-center px-6 lg:px-12 py-4 font-mono text-sm uppercase tracking-[0.2em] opacity-80">
                             <div className="text-center">{t('footer.brand')} © {currentYear}</div>

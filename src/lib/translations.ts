@@ -14,9 +14,9 @@ const translations = {
 
     // ==================== Hero ====================
     hero: {
-        subtitle: { my: "Authentic Minang Food", en: "Authentic Minang Food" },
-        tagline1: { my: "THIS IS OUR LEGACY", en: "THIS IS OUR LEGACY" },
-        tagline2: { my: "ENJOY THE SIMPLE PLEASURES", en: "ENJOY THE SIMPLE PLEASURES" },
+        subtitle: { my: "Makanan Warisan Minang", en: "Authentic Minang Food" },
+        tagline1: { my: "INI LEGASI KAMI", en: "THIS IS OUR LEGACY" },
+        tagline2: { my: "KENIKMATAN YANG SEDERHANA", en: "ENJOY THE SIMPLE PLEASURE" },
         viewMenu: { my: "Lihat Menu", en: "View Menu" },
         reservation: { my: "Tempahan", en: "Reservation" },
         scroll: { my: "Scroll", en: "Scroll" },
@@ -48,7 +48,7 @@ const translations = {
 
     // ==================== Menu ====================
     menu: {
-        label: { my: "Authentic Minang Food", en: "Authentic Minang Food" },
+        label: { my: "Makanan Warisan Minang", en: "Authentic Minang Food" },
         heading: { my: "The", en: "The" },
         headingAccent: { my: "Menu", en: "Menu" },
         subtitle: {
@@ -217,7 +217,7 @@ const translations = {
 
     // ==================== Experience ====================
     experience: {
-        label: { my: "Authentic Minang Food", en: "Authentic Minang Food" },
+        label: { my: "Makanan Warisan Minang", en: "Authentic Minang Food" },
         heading: { my: "Sebuah", en: "The" },
         headingAccent: { my: "Pengalaman", en: "Experience" },
         ambiance: { my: "Penyediaan", en: "Craft" },
@@ -242,14 +242,16 @@ const translations = {
 
     // ==================== Reservation ====================
     reservation: {
-        label: { my: "Makanan Asli Minang", en: "Authentic Minang Food" },
+        label: { my: "Makanan Warisan Minang", en: "Authentic Minang Food" },
         heading: { my: "Buat", en: "Make a" },
         headingAccent: { my: "Tempahan", en: "Reservation" },
+        foodpanda: { my: "PESAN SEKARANG DI FOODPANDA", en: "WE'RE AVAILABLE ON FOODPANDA" },
+        grabfood: { my: "PESAN SEKARANG DI GRAB FOOD", en: "WE'RE AVAILABLE ON GRAB FOOD" },
     },
 
     // ==================== Events ====================
     events: {
-        label: { my: "Authentic Minang Food", en: "Authentic Minang Food" },
+        label: { my: "Makanan Warisan Minang", en: "Authentic Minang Food" },
         heading1: { my: "Acara &", en: "Events &" },
         headingAccent: { my: "Perhimpunan", en: "Gatherings" },
         subtitle: {

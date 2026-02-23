@@ -32,8 +32,9 @@ export default function NavCapsule({
     textColor = "text-cream",
     glowSize = 100,
     contentClassName = "",
+    layout,
     ...props
-}: NavCapsuleProps) {
+}: NavCapsuleProps & { layout?: boolean | "position" | "size" }) {
     const divRef = useRef<HTMLDivElement>(null);
     const [position, setPosition] = useState({ x: 0, y: 0 });
     const [opacity, setOpacity] = useState(0);
@@ -60,6 +61,7 @@ export default function NavCapsule({
 
     return (
         <motion.div
+            layout={layout}
             ref={divRef}
             onClick={onClick}
             onMouseMove={handleMouseMove}

@@ -1,34 +1,47 @@
+import { supabase } from "@/lib/supabase";
+
 // ============================================================
 // Restaurant Status Logic
-// Manual Override > Ramadan (closed) > Business Hours (auto)
+// Priority: Manual Override (Supabase) > Ramadan (Aladhan API) > Auto Hours
 // ============================================================
 
-// In-memory store for manual override
-// Persists during warm Vercel function invocations
-// Falls back to auto mode on cold start (safe default)
-let manualOverride: "open" | "closed" | null = null;
-let overrideTimestamp: string | null = null;
+export async function getStoreSettings() {
+    try {
+        const { data, error } = await supabase
+            .from("store_settings")
+            .select("*")
+            .eq("id", 1)
+            .single();
 
-export function getManualOverride() {
-    return { override: manualOverride, updatedAt: overrideTimestamp };
+        if (error) {
+            console.error("Error fetching store settings:", error);
+            return { emergency_closed: false, force_open: false, updated_at: null };
+        }
+
+        return data || { emergency_closed: false, force_open: false, updated_at: null };
+    } catch (e) {
+        console.error("Failed to connect to store_settings", e);
+        return { emergency_closed: false, force_open: false, updated_at: null };
+    }
 }
 
-export function setManualOverride(status: "open" | "closed" | null) {
-    manualOverride = status;
-    overrideTimestamp = status ? new Date().toISOString() : null;
-}
-
-// ---- Business Hours (Mon-Fri, 10AM-5PM) ----
+// ---- Business Hours (Tue-Sat, 3PM-12AM) ----
 
 export function isWithinBusinessHours(): boolean {
     const now = new Date();
-    const day = now.getDay(); // 0=Sun, 1=Mon, ..., 5=Fri, 6=Sat
-    const hour = now.getHours();
 
-    const isWeekday = day >= 1 && day <= 5;
-    const isDuringHours = hour >= 10 && hour < 17;
+    // Convert to Malaysia Time (UTC+8) to prevent server timezone issues
+    const options = { timeZone: 'Asia/Kuala_Lumpur', hour12: false };
+    const klTimeStr = now.toLocaleString('en-US', options);
+    const klDate = new Date(klTimeStr);
 
-    return isWeekday && isDuringHours;
+    const day = klDate.getDay(); // 0=Sun, 1=Mon, 2=Tue, ..., 6=Sat
+    const hour = klDate.getHours();
+
+    const isWorkingDay = day >= 2 && day <= 6; // Tue (2) to Sat (6)
+    const isDuringHours = hour >= 15 && hour < 24; // 15:00 (3 PM) to 23:59 (12 AM)
+
+    return isWorkingDay && isDuringHours;
 }
 
 // ---- Ramadan Detection via Aladhan API ----
@@ -54,7 +67,7 @@ export async function isRamadan(): Promise<boolean> {
         );
         const data = await response.json();
         const hijriMonth = data?.data?.hijri?.month?.number;
-        const result = hijriMonth === 9;
+        const result = hijriMonth === 9; // 9 is Ramadan
 
         ramadanCache = { isRamadan: result, checkedDate: dateStr };
         return result;
@@ -78,38 +91,51 @@ export interface RestaurantStatus {
 }
 
 export async function getRestaurantStatus(): Promise<RestaurantStatus> {
-    const override = getManualOverride();
-    const ramadan = await isRamadan();
-    const withinHours = isWithinBusinessHours();
+    const settings = await getStoreSettings();
+    let ramadan = false;
+    let withinHours = false;
 
     let isOpen: boolean;
     let reason: string;
+    let manualOverrideState: "open" | "closed" | null = null;
 
-    if (override.override !== null) {
-        // Manual override takes highest precedence
-        isOpen = override.override === "open";
-        reason =
-            override.override === "open"
-                ? "Manually set to Open"
-                : "Manually set to Closed";
-    } else if (ramadan) {
-        // Ramadan — always closed
+    // Strict priority 1: Manual Overrides
+    if (settings.emergency_closed) {
         isOpen = false;
-        reason = "Closed for Ramadan";
+        reason = "Emergency Closed";
+        manualOverrideState = "closed";
+        // Calculate background vars just for context
+        ramadan = await isRamadan();
+        withinHours = isWithinBusinessHours();
+    } else if (settings.force_open) {
+        isOpen = true;
+        reason = "Manually Open";
+        manualOverrideState = "open";
+        // Calculate background vars just for context
+        ramadan = await isRamadan();
+        withinHours = isWithinBusinessHours();
     } else {
-        // Auto based on business hours
-        isOpen = withinHours;
-        reason = withinHours
-            ? "Within business hours (Mon–Fri, 10AM–5PM)"
-            : "Outside business hours";
+        // Strict priority 2: Ramadan
+        ramadan = await isRamadan();
+        if (ramadan) {
+            isOpen = false;
+            reason = "Closed for Ramadan";
+        } else {
+            // Strict priority 3: Business Hours
+            withinHours = isWithinBusinessHours();
+            isOpen = withinHours;
+            reason = withinHours
+                ? "Open (Tue-Sat, 3PM-12AM)"
+                : "Closed (Outside Business Hours)";
+        }
     }
 
     return {
         isOpen,
         reason,
         details: {
-            manualOverride: override.override,
-            overrideTimestamp: override.updatedAt,
+            manualOverride: manualOverrideState,
+            overrideTimestamp: settings.updated_at,
             isRamadan: ramadan,
             withinBusinessHours: withinHours,
         },
