@@ -119,3 +119,13 @@
   color: black !important;
   border-color: transparent !important;
 }
+
+@keyframes shimmer {
+  0% {
+    background-position: 0% 50%;
+  }
+
+  100% {
+    background-position: 100% 50%;
+  }
+}

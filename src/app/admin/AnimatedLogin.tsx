@@ -529,7 +529,7 @@ export default function AnimatedLogin({
 
                         <Button
                             type="submit"
-                            className="w-full h-11 text-sm font-semibold mt-6 bg-[#E8E8E8] text-black btn-gold-hover rounded-lg transition-all duration-300"
+                            className="w-full h-11 text-sm font-semibold mt-6 bg-[#E8E8E8] text-black hover:bg-[#d0d0d0] rounded-lg transition-colors duration-200"
                             size="lg"
                             disabled={loadingAuth}
                         >

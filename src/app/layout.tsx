@@ -54,6 +54,10 @@ export default function RootLayout({
 }>) {
     return (
         <html lang="en" className={`${playfair.variable} ${inter.variable} ${trajanProRegular.variable} ${trajanProBold.variable}`}>
+            <head>
+                {/* Prevent browser from restoring scroll position on refresh */}
+                <script dangerouslySetInnerHTML={{ __html: `history.scrollRestoration = 'manual';` }} />
+            </head>
             <body className="antialiased">
                 <LayoutShell>{children}</LayoutShell>
             </body>

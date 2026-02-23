@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import { useLanguage } from "@/context/LanguageContext";
 import { SiInstagram, SiWhatsapp, SiWaze, SiFoodpanda, SiGrab } from "react-icons/si";
+import GradientText from "@/components/UI/GradientText";
 
 export default function Footer() {
     const { t } = useLanguage();
@@ -45,12 +46,16 @@ export default function Footer() {
                         <div className="w-full max-w-[1600px] px-6 lg:px-12 flex justify-center">
                             {/* Golden Bounding Box */}
                             <div className="w-full border border-gold-dark py-10 lg:py-20 px-6 text-center flex flex-col items-center justify-center gap-6 lg:gap-10">
-                                <h2
-                                    className="font-harbour text-3xl md:text-5xl lg:text-5xl uppercase max-w-5xl leading-tight md:leading-snug tracking-wider"
-                                    style={{ WebkitTextStroke: '1px var(--color-gold-dark)', color: 'transparent' }}
+                                <h1
+                                    className="font-harbour text-3xl md:text-5xl lg:text-5xl uppercase max-w-5xl leading-tight md:leading-snug tracking-wider bg-clip-text text-transparent"
+                                    style={{
+                                        backgroundImage: 'linear-gradient(to right, #EABF47, #ffd38e, #d4af37, #EABF47)',
+                                        backgroundSize: '300% 100%',
+                                        animation: 'shimmer 8s ease-in-out infinite alternate',
+                                    }}
                                 >
                                     {t('footer.quote')}
-                                </h2>
+                                </h1>
                                 <div className="font-mono text-gold-dark text-[10px] md:text-xs uppercase tracking-[0.2em] font-semibold">
                                     {t('footer.brand')}
                                 </div>
