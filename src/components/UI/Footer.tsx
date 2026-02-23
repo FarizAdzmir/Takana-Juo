@@ -41,11 +41,11 @@ export default function Footer() {
             <div className="fixed bottom-0 left-0 w-full h-[100dvh]">
                 <section className="w-full h-full bg-charcoal flex flex-col items-center justify-between overflow-x-hidden overflow-y-auto">
 
-                    <div className="w-full flex-grow flex flex-col items-center justify-center pt-24 lg:pt-8">
+                    <div className="w-full flex-grow flex flex-col items-center justify-center pt-4 lg:pt-8">
                         {/* Press Mention Section */}
                         <div className="w-full max-w-[1600px] px-6 lg:px-12 flex justify-center">
                             {/* Golden Bounding Box */}
-                            <div className="w-full border border-gold-dark py-10 lg:py-20 px-6 text-center flex flex-col items-center justify-center gap-6 lg:gap-10">
+                            <div className="w-full border border-gold-dark py-6 lg:py-20 px-6 text-center flex flex-col items-center justify-center gap-4 lg:gap-10">
                                 <h1
                                     className="font-harbour text-3xl md:text-5xl lg:text-5xl uppercase max-w-5xl leading-tight md:leading-snug tracking-wider bg-clip-text text-transparent"
                                     style={{
@@ -67,7 +67,7 @@ export default function Footer() {
                             <div className="w-full grid grid-cols-1 lg:grid-cols-[1fr_2.5fr_2.5fr] border border-cream/30">
 
                                 {/* Left Col: Logo */}
-                                <div className="flex justify-center items-center py-8 lg:py-12 px-8 border-b lg:border-b-0 lg:border-r border-cream/30">
+                                <div className="flex justify-center items-center py-4 lg:py-12 px-8 border-b lg:border-b-0 lg:border-r border-cream/30">
                                     <div className="w-16 md:w-24">
                                         <a href="/">
                                             <svg
@@ -135,12 +135,12 @@ export default function Footer() {
                                 {/* Middle Col: Description & Contact */}
                                 <div className="flex flex-col border-b lg:border-b-0 lg:border-r border-cream/30">
                                     {/* Description - top half */}
-                                    <div className="py-8 lg:py-12 px-8 font-mono text-sm max-w-lg mx-auto lg:mx-0 w-full uppercase tracking-[0.15em] leading-[1.8] opacity-80 min-h-[120px] lg:min-h-[160px] flex justify-center lg:justify-start items-center text-center lg:text-left">
+                                    <div className="py-4 lg:py-12 px-8 font-mono text-sm max-w-lg mx-auto lg:mx-0 w-full uppercase tracking-[0.15em] leading-[1.8] opacity-80 min-h-[80px] lg:min-h-[160px] flex justify-center lg:justify-start items-center text-center lg:text-left">
                                         {t('footer.description')}
                                     </div>
                                     {/* Horizontal Divider bounded inside column */}
                                     <div className="w-full border-t border-cream/30"></div>
-                                    <div className="py-8 px-8 font-mono text-sm uppercase tracking-[0.15em] opacity-80 flex lg:items-center justify-center lg:justify-start text-center lg:text-left">
+                                    <div className="py-4 px-8 font-mono text-sm uppercase tracking-[0.15em] opacity-80 flex lg:items-center justify-center lg:justify-start text-center lg:text-left">
                                         <span className="leading-loose">
                                             {t('footer.contactText').replace('+60 10-214 5431', '').trim()}
                                             <br />
@@ -150,7 +150,7 @@ export default function Footer() {
                                 </div>
 
                                 {/* Right Col: Social Icons */}
-                                <div className="flex flex-col py-8 lg:py-12 px-8 justify-center">
+                                <div className="flex flex-col py-4 lg:py-12 px-8 justify-center">
                                     <div className="flex flex-col gap-6 lg:gap-8 justify-center items-center w-full">
                                         <span className="font-harbour text-xl tracking-widest uppercase text-cream font-bold opacity-90">
                                             {t('footer.connectTitle')}
@@ -179,7 +179,7 @@ export default function Footer() {
                         </div>
                     </div>
 
-                    <div className="w-full flex flex-col items-center pb-24 lg:pb-4 pt-6 lg:pt-8 text-gold-dark">
+                    <div className="w-full flex flex-col items-center pb-4 lg:pb-4 pt-3 lg:pt-8 text-gold-dark">
                         {/* Bottom Bar: Copyright */}
                         <div className="w-full max-w-[1600px] flex justify-center items-center px-6 lg:px-12 py-4 font-mono text-sm uppercase tracking-[0.2em] opacity-80">
                             <div className="text-center">{t('footer.brand')} © {currentYear}</div>

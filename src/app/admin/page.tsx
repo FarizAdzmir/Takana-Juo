@@ -259,40 +259,41 @@ export default function AdminPage() {
 
                         {/* Menu Items (Traditional Table with Rows, Glass) */}
                         <div className="bg-white/5 backdrop-blur-md border border-white/10 overflow-x-auto">
-                            <table className="w-full text-left border-collapse min-w-[600px]">
+                            <table className="w-full text-left border-collapse">
                                 <thead>
                                     <tr className="border-b border-white/10 bg-black/40">
-                                        <th className="p-5 text-xs font-semibold uppercase tracking-wider text-white/50">Dish</th>
-                                        <th className="p-5 text-xs font-semibold uppercase tracking-wider text-white/50 w-32">Price</th>
-                                        <th className="p-5 text-xs font-semibold uppercase tracking-wider text-white/50 w-28 text-right">Action</th>
+                                        <th className="p-2 sm:p-5 text-xs font-semibold uppercase tracking-wider text-white/50">Menu</th>
+                                        <th className="p-2 sm:p-5 text-xs font-semibold uppercase tracking-wider text-white/50 w-20 sm:w-32">Price</th>
+                                        <th className="p-2 sm:p-5 text-xs font-semibold uppercase tracking-wider text-white/50 w-16 sm:w-28 text-right">Edit</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     {menuItems.map((item) => (
                                         <tr key={item.id} className="border-b border-white/5 hover:bg-white/[0.02] transition-colors group">
-                                            <td className="p-5">
-                                                <div className="flex items-center gap-4">
-                                                    <div className="w-14 h-14 bg-black/50 overflow-hidden flex-shrink-0 border border-white/5 p-1.5">
+                                            <td className="p-2 sm:p-5">
+                                                <div className="flex items-center gap-2 sm:gap-4">
+                                                    <div className="w-10 h-10 sm:w-14 sm:h-14 bg-black/50 overflow-hidden flex-shrink-0 border border-white/5 p-1">
                                                         {/* eslint-disable-next-line @next/next/no-img-element */}
                                                         <img src={item.image} alt={item.sub} className="w-full h-full object-contain" />
                                                     </div>
                                                     <div>
-                                                        <div className="font-semibold text-lg leading-tight mb-1">{item.main}</div>
+                                                        <div className="font-semibold text-sm sm:text-lg leading-tight mb-0.5">{item.main}</div>
                                                         {item.sub !== 'Biasa' && (
-                                                            <div className="text-sm text-white/40">{item.sub}</div>
+                                                            <div className="text-xs sm:text-sm text-white/40">{item.sub}</div>
                                                         )}
                                                     </div>
                                                 </div>
                                             </td>
-                                            <td className="p-5 text-lg font-medium tracking-wide">
+                                            <td className="p-2 sm:p-5 text-sm sm:text-lg font-medium tracking-wide">
                                                 {item.price}
                                             </td>
-                                            <td className="p-5 text-right">
+                                            <td className="p-2 sm:p-5 text-right">
                                                 <button
                                                     onClick={() => openEditModal(item)}
-                                                    className="bg-white/10 hover:bg-white text-white hover:text-black px-4 py-2 text-sm transition-all font-medium flex items-center justify-center gap-2 ml-auto"
+                                                    className="bg-white/10 hover:bg-white text-white hover:text-black px-2 sm:px-4 py-1.5 sm:py-2 text-xs sm:text-sm transition-all font-medium flex items-center justify-center gap-1 sm:gap-2 ml-auto"
                                                 >
-                                                    <Edit2 size={14} /> Edit
+                                                    <Edit2 size={14} />
+                                                    <span className="hidden sm:inline">Edit</span>
                                                 </button>
                                             </td>
                                         </tr>
