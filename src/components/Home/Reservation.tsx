@@ -165,8 +165,8 @@ export default function Reservation() {
                         </div>
                     </div>
 
-                    {/* Right Column: Embedded Map */}
-                    <RevealText delay={0.3} className="relative h-full min-h-[400px] w-full">
+                    {/* Right Column: Embedded Map — hidden on mobile to prevent lag */}
+                    <RevealText delay={0.3} className="relative h-full min-h-[400px] w-full hidden lg:block">
                         <div className="absolute inset-0 border border-white/10 p-2 bg-black/80 backdrop-blur-md shadow-lg pointer-events-none">
                             <div className="relative w-full h-full border border-white/10 overflow-hidden bg-[#0A0A0A] group pb-8">
                                 <iframe

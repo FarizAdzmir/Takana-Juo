@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState, useEffect, useCallback } from "react";
+import React, { useRef, useState, useEffect, useCallback } from "react";
 import { useLanguage } from "@/context/LanguageContext";
 import { RevealText } from "../UI/Reveal";
 import MenuCard from "@/components/UI/MenuCard";
@@ -53,7 +53,7 @@ export default function Menu() {
         }
     }, [emblaApi, isLoading, menuItems]);
 
-    // Disable dragging on Desktop ONLY
+    // Disable dragging on Desktop
     useEffect(() => {
         if (!emblaApi) return;
         const toggleDrag = () => {
@@ -67,6 +67,18 @@ export default function Menu() {
         window.addEventListener('resize', toggleDrag);
         return () => window.removeEventListener('resize', toggleDrag);
     }, [emblaApi]);
+
+    // Disable wheel scroll hijacking on mobile so page scrolls freely
+    const emblaViewportRef = useRef<HTMLDivElement>(null);
+    useEffect(() => {
+        const el = emblaViewportRef.current;
+        if (!el) return;
+        const blockWheelOnMobile = (e: WheelEvent) => {
+            if (window.innerWidth < 1280) e.stopPropagation();
+        };
+        el.addEventListener('wheel', blockWheelOnMobile, { passive: true });
+        return () => el.removeEventListener('wheel', blockWheelOnMobile);
+    }, []);
 
     const [activeIndex, setActiveIndex] = useState(0);
 
@@ -191,8 +203,11 @@ export default function Menu() {
                         {/* Viewport wrapper without ugly scrollbars */}
                         <div
                             className="w-full xl:max-w-[1500px] mx-auto relative cursor-grab active:cursor-grabbing overflow-hidden pt-[160px] -mt-[160px] pb-12 z-10"
-                            ref={emblaRef}
-                            data-lenis-prevent
+                            ref={(node) => {
+                                emblaRef(node);
+                                emblaViewportRef.current = node;
+                            }}
+                            data-lenis-prevent-touch
                         >
                             <div className="flex backface-hidden touch-pan-y touch-pinch-zoom">
                                 {isLoading ? (
