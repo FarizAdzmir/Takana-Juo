@@ -84,6 +84,9 @@ const translations = {
             my: "Telur segar diaduk sehingga gebu sempurna, menghasilkan telur dadar keemasan yang ringan dan lembut di lidah.",
             en: "Farm-fresh eggs are beaten to perfection, creating a fluffy, golden omelette that is light and melts in the mouth.",
         },
+        customerRating: { my: "Penilaian Pelanggan", en: "Customer Rating" },
+        freshIngredients: { my: "Bahan Segar", en: "Fresh Ingredients" },
+        inKualaLumpur: { my: "Di Kuala Lumpur", en: "In Kuala Lumpur" },
     },
 
     // ==================== Reservation ====================

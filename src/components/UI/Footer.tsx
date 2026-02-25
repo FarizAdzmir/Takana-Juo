@@ -39,7 +39,7 @@ export default function Footer() {
             style={{ clipPath: "polygon(0 0, 100% 0, 100% 100%, 0 100%)" }}
         >
             <div className="fixed bottom-0 left-0 w-full h-[100dvh]">
-                <section className="w-full h-full bg-charcoal flex flex-col items-center justify-between overflow-x-hidden overflow-y-auto">
+                <section className="w-full h-full bg-charcoal flex flex-col items-center justify-between">
 
                     <div className="w-full flex-grow flex flex-col items-center justify-center pt-4 lg:pt-8">
                         {/* Press Mention Section */}
