@@ -17,6 +17,8 @@ export default function SmoothScroll({ children }: { children: React.ReactNode }
       gestureOrientation: "vertical",
       smoothWheel: true,
       syncTouch: true,
+      wheelMultiplier: 1, // Add standard multiplier
+      touchMultiplier: 2, // Improve touch responsiveness on mobile
     });
 
     // Force scroll to top

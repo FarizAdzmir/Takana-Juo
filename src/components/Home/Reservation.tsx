@@ -51,52 +51,16 @@ export default function Reservation() {
 
     return (
         <section id="reservation" className="relative py-32 text-white overflow-hidden">
-            {/* Enhanced Background Effects */}
-            <div className="absolute inset-0">
-                <motion.div
-                    className="absolute inset-0 bg-gradient-to-br from-gold-dark/[0.04] via-black to-[#D4AF37]/[0.05]"
-                    animate={{
-                        backgroundPosition: ['0% 0%', '100% 100%', '0% 0%'],
-                    }}
-                    transition={{
-                        duration: 35,
-                        repeat: Infinity,
-                        ease: "linear"
-                    }}
+            {/* Enhanced Background Effects - Optimized for Performance */}
+            <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden">
+                {/* Static Background Gradient - Hardware Accelerated */}
+                <div
+                    className="absolute inset-0 opacity-40 mix-blend-screen"
                     style={{
-                        backgroundSize: '400% 400%'
+                        background: 'radial-gradient(circle at 15% 30%, rgba(234, 191, 71, 0.04) 0%, transparent 40%), radial-gradient(circle at 85% 75%, rgba(212, 175, 55, 0.03) 0%, transparent 40%)',
+                        transform: 'translateZ(0)' // Force hardware acceleration
                     }}
                 />
-
-                {/* Moving orbs changed to gold/cream hints to keep brand color */}
-                <motion.div
-                    className="absolute top-1/3 left-1/5 w-96 h-96 bg-gold-dark/[0.03] blur-[100px]"
-                    animate={{
-                        x: [0, 200, 0],
-                        y: [0, 100, 0],
-                        scale: [1, 1.3, 1],
-                    }}
-                    transition={{
-                        duration: 30,
-                        repeat: Infinity,
-                        ease: "easeInOut"
-                    }}
-                />
-                <motion.div
-                    className="absolute bottom-1/4 right-1/5 w-80 h-80 bg-white/[0.02] blur-[100px]"
-                    animate={{
-                        x: [0, -150, 0],
-                        y: [0, -80, 0],
-                        scale: [1, 1.2, 1],
-                    }}
-                    transition={{
-                        duration: 25,
-                        repeat: Infinity,
-                        ease: "easeInOut"
-                    }}
-                />
-
-
             </div>
 
             <div
