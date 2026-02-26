@@ -57,7 +57,7 @@ export default function Home() {
 
         const triggers: ScrollTrigger[] = [];
 
-        lightZones.forEach((section) => {
+        lightZones.forEach((section, index) => {
             if (!section) return;
 
             const st = ScrollTrigger.create({
@@ -65,6 +65,13 @@ export default function Home() {
                 start: "top center",
                 end: "bottom center",
                 onEnter: () => {
+                    // For the Menu section (index 1), conditionally check its theme before forcing cream
+                    if (index === 1) {
+                        const menuEl = document.querySelector("#menu");
+                        if (menuEl && menuEl.getAttribute("data-theme") === "dark") {
+                            return; // Don't animate to cream if menu is in dark (card) mode
+                        }
+                    }
                     gsap.to(wrapperRef.current, {
                         backgroundColor: "#f5f5f0", // cream
                         duration: 0.3,
@@ -81,6 +88,13 @@ export default function Home() {
                     });
                 },
                 onEnterBack: () => {
+                    // Same logic for entering from the bottom
+                    if (index === 1) {
+                        const menuEl = document.querySelector("#menu");
+                        if (menuEl && menuEl.getAttribute("data-theme") === "dark") {
+                            return; // Don't animate to cream if menu is in dark (card) mode
+                        }
+                    }
                     gsap.to(wrapperRef.current, {
                         backgroundColor: "#f5f5f0", // cream
                         duration: 0.3,

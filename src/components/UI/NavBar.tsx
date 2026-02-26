@@ -109,8 +109,8 @@ export default function NavBar() {
             if (storyEl) {
                 triggers.push(ScrollTrigger.create({
                     trigger: storyEl,
-                    start: "top 50px",
-                    end: "bottom 50px",
+                    start: "top center",
+                    end: "bottom center",
                     onEnter: () => { currentSection = "story"; updateLightSection(); },
                     onLeave: () => { currentSection = ""; updateLightSection(); },
                     onEnterBack: () => { currentSection = "story"; updateLightSection(); },
@@ -123,8 +123,8 @@ export default function NavBar() {
             if (menuEl) {
                 triggers.push(ScrollTrigger.create({
                     trigger: menuEl,
-                    start: "top 50px",
-                    end: "bottom 50px",
+                    start: "top center",
+                    end: "bottom center",
                     onEnter: () => { currentSection = "menu"; updateLightSection(); },
                     onLeave: () => { currentSection = ""; updateLightSection(); },
                     onEnterBack: () => { currentSection = "menu"; updateLightSection(); },
@@ -235,7 +235,7 @@ export default function NavBar() {
 
                     {/* [LOGO] Capsule */}
                     <NavCapsule
-                        className={`w-16 md:w-20 h-10 md:h-12 cursor-pointer transition-colors duration-300 ${isLightSection ? "hover:bg-charcoal/5" : "hover:bg-white/10"}`}
+                        className={`w-16 md:w-20 h-10 md:h-12 cursor-pointer transition-colors duration-500 ${isLightSection ? "hover:bg-charcoal/5" : "hover:bg-white/10"}`}
                         glowSize={70}
                         textColor={textColor}
                         backdropClass={backdropClass}
@@ -259,7 +259,7 @@ export default function NavBar() {
                                 className="overflow-hidden"
                             >
                                 <NavCapsule
-                                    className="px-8 h-10 md:h-12 -ml-[1px]"
+                                    className="px-8 h-10 md:h-12 -ml-[1px] transition-colors duration-500"
                                     contentClassName="gap-8"
                                     textColor={textColor}
                                     backdropClass={backdropClass}
@@ -283,7 +283,7 @@ export default function NavBar() {
 
                     {/* [OPEN/CLOSE] Status Capsule */}
                     <NavCapsule
-                        className="w-[100px] md:w-[120px] px-2 md:px-4 h-10 md:h-12 whitespace-nowrap -ml-[1px]"
+                        className="w-[100px] md:w-[120px] px-2 md:px-4 h-10 md:h-12 whitespace-nowrap -ml-[1px] transition-colors duration-500"
                         textColor={statusTextColor}
                         backdropClass={backdropClass}
                         borderColor={borderColor}
@@ -297,7 +297,7 @@ export default function NavBar() {
 
                     {/* [LANGUAGE] Capsule */}
                     <NavCapsule
-                        className={`w-16 md:w-20 h-10 md:h-12 cursor-pointer transition-colors duration-300 group -ml-[1px] ${isLightSection ? "hover:bg-charcoal/5" : "hover:bg-white/10"}`}
+                        className={`w-16 md:w-20 h-10 md:h-12 cursor-pointer transition-colors duration-500 group -ml-[1px] ${isLightSection ? "hover:bg-charcoal/5" : "hover:bg-white/10"}`}
                         textColor={textColor}
                         backdropClass={backdropClass}
                         borderColor={borderColor}
@@ -338,7 +338,7 @@ export default function NavBar() {
                                 style={{ transform: 'translateZ(0)', WebkitBackfaceVisibility: 'hidden', backfaceVisibility: 'hidden' }}
                             >
                                 <NavCapsule
-                                    className="w-full h-12 px-0"
+                                    className="w-full h-12 px-0 transition-colors duration-500"
                                     contentClassName="grid grid-cols-2 w-full h-full items-center divide-x divide-white/5"
                                     textColor={textColor}
                                     backdropClass={backdropClass}
@@ -370,7 +370,7 @@ export default function NavBar() {
                         {/* Logo */}
                         <NavCapsule
                             layout
-                            className={`w-14 h-12 cursor-pointer transition-colors duration-300 ${isLightSection ? "hover:bg-charcoal/5" : "hover:bg-white/10"}`}
+                            className={`w-14 h-12 cursor-pointer transition-colors duration-500 ${isLightSection ? "hover:bg-charcoal/5" : "hover:bg-white/10"}`}
                             glowSize={70}
                             textColor={textColor}
                             backdropClass={backdropClass}
@@ -400,7 +400,7 @@ export default function NavBar() {
                         {/* Language */}
                         <NavCapsule
                             layout
-                            className={`w-14 h-12 cursor-pointer transition-colors duration-300 group -ml-[1px] ${isLightSection ? "hover:bg-charcoal/5" : "hover:bg-white/10"}`}
+                            className={`w-14 h-12 cursor-pointer transition-colors duration-500 group -ml-[1px] ${isLightSection ? "hover:bg-charcoal/5" : "hover:bg-white/10"}`}
                             textColor={textColor}
                             backdropClass={backdropClass}
                             borderColor={borderColor}
