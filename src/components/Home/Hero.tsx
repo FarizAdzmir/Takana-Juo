@@ -7,7 +7,6 @@ import { useLanguage } from "@/context/LanguageContext";
 import RollingText from "@/components/UI/RollingText";
 import GradientText from "@/components/UI/GradientText";
 import ShinyText from "@/components/UI/ShinyText";
-import Noise from "@/components/UI/Noise";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -61,8 +60,9 @@ export default function Hero({ isLoaded = false, preloadedImages = [] }: HeroPro
                 // Double check container existence
                 if (!container) return;
 
-                const containerWidth = container.offsetWidth;
-                const containerHeight = container.offsetHeight;
+                // Use window inner dimensions for full screen to prevent clipping issues with pinned containers
+                const containerWidth = window.innerWidth;
+                const containerHeight = window.innerHeight;
 
                 // Avoid rendering on 0x0 container
                 if (containerWidth === 0 || containerHeight === 0) return;
@@ -144,14 +144,6 @@ export default function Hero({ isLoaded = false, preloadedImages = [] }: HeroPro
                     ref={canvasRef}
                     className="block"
                     style={{ width: '100%', height: '100%' }}
-                />
-                <div className="absolute inset-0 bg-charcoal/30" />
-                <Noise
-                    patternSize={200}
-                    patternScaleX={1}
-                    patternScaleY={1}
-                    patternRefreshInterval={2}
-                    patternAlpha={15}
                 />
             </div>
 

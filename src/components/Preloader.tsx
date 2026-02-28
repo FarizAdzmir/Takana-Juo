@@ -28,7 +28,7 @@ export default function Preloader({ onImagesReady, isRevealing }: PreloaderProps
         if (hasStarted.current) return;
         hasStarted.current = true;
 
-        const frameCount = 150;
+        const frameCount = 70;
         let loadedCount = 0;
         const images: HTMLImageElement[] = [];
 
@@ -48,7 +48,7 @@ export default function Preloader({ onImagesReady, isRevealing }: PreloaderProps
 
                 img.onload = onComplete;
                 img.onerror = onComplete;
-                img.src = `/images/Frames/frame_${frameNum}.jpg`;
+                img.src = `/images/Frames-Animation/frame_${frameNum}.jpeg`;
             });
         });
 
